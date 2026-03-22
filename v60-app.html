@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="V60 Brew"/>
+  <meta name="theme-color" content="#0f0f0f"/>
+  <title>V60 Brew</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+    html,body{height:100%;background:#0f0f0f;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overscroll-behavior:none}
+    input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:#2a2a2a;outline:none;width:100%}
+    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;cursor:pointer}
+    ::-webkit-scrollbar{display:none}
+    button{font-family:inherit;cursor:pointer}
+    .screen{display:none;min-height:100vh;padding:50px 16px 40px;overflow-y:auto}
+    .screen.active{display:block}
+    .wrap{max-width:420px;margin:0 auto}
+    .row{display:flex;align-items:center;justify-content:space-between}
+    .back-btn{background:#1e1e1e;border:none;color:#fff;border-radius:10px;padding:8px 14px;font-size:18px}
+    .badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:10px}
+    .badge.versement{background:#1a3a2a;color:#4ade80;border:1px solid #4ade8055}
+    .badge.repos{background:#1a2a3a;color:#60a5fa;border:1px solid #60a5fa55}
+    .dots{display:flex;justify-content:center;gap:6px;margin-bottom:20px}
+    .dot{height:7px;border-radius:4px;background:#2a2a2a;transition:all .3s}
+    .timer-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:16px}
+    .timer-btns{display:flex;gap:10px;margin-top:10px}
+    .timer-btn{border:none;color:#fff;border-radius:12px;padding:10px 28px;font-size:15px;font-weight:600;font-family:inherit}
+    .next-btn{width:100%;border:none;color:#fff;border-radius:14px;padding:16px;font-size:16px;font-weight:700;font-family:inherit;transition:all .3s}
+    .strength-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:28px}
+    .strength-btn{border-radius:14px;padding:14px 6px;border:2px solid #2a2a2a;color:#fff;background:#1a1a1a;text-align:center;transition:all .2s;font-family:inherit}
+    .s-label{font-size:13px;font-weight:700}
+    .s-desc{font-size:11px;color:#666;margin-top:3px}
+    .summary{background:#1a1a1a;border-radius:18px;padding:20px;margin-bottom:28px}
+    .summary-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center}
+    .summary-val{font-size:24px;font-weight:700}
+    .summary-unit{font-size:11px;color:#666;margin-top:3px}
+    .summary-footer{border-top:1px solid #2a2a2a;margin-top:16px;padding-top:12px;text-align:center;color:#555;font-size:13px}
+    .steps-list{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+    .step-row{display:flex;align-items:center;gap:12px;background:#1a1a1a;border-radius:12px;padding:10px 14px}
+    .step-icon{font-size:20px;min-width:28px;text-align:center}
+    .step-title{flex:1;font-size:14px;font-weight:500}
+    .step-time{font-size:12px;border-radius:6px;padding:2px 8px;white-space:nowrap}
+    .start-btn{width:100%;border:none;color:#fff;border-radius:16px;padding:18px;font-size:18px;font-weight:700;font-family:inherit}
+    .card{background:#1a1a1a;border-radius:20px;padding:28px 24px;margin-bottom:20px;text-align:center;border:1px solid #2a2a2a}
+    .card-icon{font-size:48px;margin-bottom:10px}
+    .card-title{font-size:20px;margin-bottom:10px;font-weight:700}
+    .card-desc{color:#aaa;font-size:15px;line-height:1.6}
+    .target-box{margin-top:14px;background:#252525;border-radius:10px;padding:8px 16px;display:inline-block}
+    .target-val{font-size:20px;font-weight:700}
+    .target-unit{color:#666;font-size:13px}
+    .hist-list{display:flex;flex-direction:column;gap:10px}
+    .hist-item{background:#1a1a1a;border-radius:14px;padding:14px 18px}
+    .hist-top{display:flex;justify-content:space-between}
+    .hist-name{font-weight:600}
+    .hist-date{font-size:12px;color:#666}
+    .hist-info{color:#aaa;font-size:14px;margin-top:4px}
+    .empty{text-align:center;color:#555;margin-top:80px}
+    .empty-icon{font-size:56px}
+    .done-wrap{text-align:center;padding-top:60px}
+    .done-icon{font-size:80px;margin-bottom:16px}
+    .done-title{font-size:28px;margin-bottom:8px;font-weight:700}
+    .done-sub{color:#888;margin-bottom:40px}
+    .lbl{font-size:12px;color:#666;margin-bottom:10px;display:block;text-transform:uppercase;letter-spacing:1px}
+    .water-row{display:flex;justify-content:space-between;margin-bottom:10px;align-items:center}
+    .water-minmax{display:flex;justify-content:space-between;margin-top:6px}
+    .water-minmax span{font-size:11px;color:#444}
+  </style>
+</head>
+<body>
+
+<div id="screen-home" class="screen active">
+  <div class="wrap">
+    <div class="row" style="margin-bottom:32px">
+      <div>
+        <h1 style="font-size:28px;font-weight:700">V60 Brew ☕</h1>
+        <p style="color:#666;font-size:14px;margin-top:4px">Guide de préparation</p>
+      </div>
+      <button id="btn-history" style="background:#1e1e1e;border:none;color:#aaa;border-radius:10px;padding:8px 12px;font-size:13px;display:flex;align-items:center;gap:6px">
+        📋 <span id="hist-badge" style="display:none;border-radius:6px;padding:1px 6px;font-size:11px;color:#fff"></span>
+      </button>
+    </div>
+    <span class="lbl">Niveau de corsé</span>
+    <div class="strength-grid" id="strength-grid"></div>
+    <div style="margin-bottom:28px">
+      <div class="water-row">
+        <span style="font-size:12px;color:#666;text-transform:uppercase;letter-spacing:1px">Quantité d'eau</span>
+        <span id="water-display" style="font-weight:700;font-size:16px">500 ml</span>
+      </div>
+      <input type="range" id="water-slider" min="150" max="1000" step="50" value="500"/>
+      <div class="water-minmax"><span>150 ml</span><span>1000 ml</span></div>
+    </div>
+    <div class="summary" id="summary-card">
+      <div class="summary-grid">
+        <div><div class="summary-val" id="sum-water">500</div><div class="summary-unit">ml d'eau</div></div>
+        <div><div class="summary-val" id="sum-coffee">33</div><div class="summary-unit">g de café</div></div>
+        <div><div class="summary-val">90°</div><div class="summary-unit">température</div></div>
+      </div>
+      <div class="summary-footer" id="sum-ratio">Ratio 1:15 · Extraction ~3:00–3:30 min</div>
+    </div>
+    <span class="lbl">Étapes</span>
+    <div class="steps-list" id="steps-preview"></div>
+    <button id="btn-start" class="start-btn">Commencer la préparation ☕</button>
+  </div>
+</div>
+
+<div id="screen-brew" class="screen">
+  <div class="wrap">
+    <div class="row" style="margin-bottom:24px">
+      <button class="back-btn" id="btn-brew-back">←</button>
+      <span style="color:#666;font-size:14px" id="step-counter">Étape 1 / 8</span>
+    </div>
+    <div id="brew-content"></div>
+  </div>
+</div>
+
+<div id="screen-history" class="screen">
+  <div class="wrap">
+    <div class="row" style="margin-bottom:24px">
+      <button class="back-btn" id="btn-hist-back">←</button>
+      <h2 style="font-size:20px">Historique</h2>
+      <div style="width:46px"></div>
+    </div>
+    <div id="hist-content"></div>
+  </div>
+</div>
+
+<script>
+var STRENGTHS = {
+  light:  { label:"Léger",     ratio:16, color:"#c8a97e", desc:"Délicat & floral" },
+  medium: { label:"Équilibré", ratio:15, color:"#a0673a", desc:"Doux & aromatique" },
+  strong: { label:"Corsé",     ratio:13, color:"#6b3a1f", desc:"Intense & puissant" }
+};
+
+function getSteps(coffee, water) {
+  return [
+    { id:1, title:"Préparer le filtre",   type:null,        desc:"Rince le filtre avec de l'eau chaude. Préchauffe le V60 et ta tasse. Jette l'eau de rinçage.", duration:0,  icon:"🫧" },
+    { id:2, title:"Ajouter le café",      type:null,        desc:"Verse "+coffee+"g de café moulu moyen-fin. Fais un léger creux au centre. Lance le chrono.",    duration:0,  icon:"☕" },
+    { id:3, title:"Bloom – Pré-infusion", type:"repos",     desc:"Verse "+Math.round(coffee*2)+"ml en spirale puis pose ta bouilloire. Laisse reposer 45s sans toucher.", duration:45, icon:"💧", target:Math.round(coffee*2) },
+    { id:4, title:"1er versement",        type:"versement", desc:"Verse lentement en spirale jusqu'à "+Math.round(water*0.4)+"ml au total. Tu as 30s pour verser.", duration:30, icon:"🌊", target:Math.round(water*0.4) },
+    { id:5, title:"2e versement",         type:"versement", desc:"Verse à nouveau jusqu'à "+Math.round(water*0.7)+"ml au total. Tu as 30s pour verser.",           duration:30, icon:"🌊", target:Math.round(water*0.7) },
+    { id:6, title:"3e versement (final)", type:"versement", desc:"Verse jusqu'à "+water+"ml au total. Finis au centre. Tu as 30s pour verser.",                    duration:30, icon:"🌊", target:water },
+    { id:7, title:"Extraction",           type:"repos",     desc:"Pose ta bouilloire et laisse s'écouler complètement. Ne touche à rien. Doit finir entre 3:00 et 3:30 min.", duration:90, icon:"⏳" },
+    { id:8, title:"Déguster !",           type:null,        desc:"Retire le V60, agite légèrement ta tasse et savoure. Bon café !",                               duration:0,  icon:"✨" }
+  ];
+}
+
+function fmt(s){ var m=Math.floor(s/60),sec=s%60; return m+":"+(sec<10?"0":"")+sec; }
+
+var S = {
+  water:500, strength:"medium", step:0, timeLeft:0,
+  running:false, done:false, interval:null,
+  history: (function(){ try{ return JSON.parse(localStorage.getItem("v60h")||"[]"); }catch(e){ return []; } })()
+};
+
+function getCoffee(){ return Math.round(S.water / STRENGTHS[S.strength].ratio); }
+function getAccent(){ return STRENGTHS[S.strength].color; }
+function getStepsNow(){ return getSteps(getCoffee(), S.water); }
+
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(function(el){ el.classList.remove('active'); });
+  document.getElementById('screen-'+name).classList.add('active');
+}
+
+function renderHome(){
+  var acc = getAccent();
+  var str = STRENGTHS[S.strength];
+  var grid = document.getElementById('strength-grid');
+  grid.innerHTML = '';
+  Object.keys(STRENGTHS).forEach(function(key){
+    var val = STRENGTHS[key];
+    var btn = document.createElement('button');
+    btn.className = 'strength-btn';
+    btn.style.background = S.strength===key ? val.color : '#1a1a1a';
+    btn.style.borderColor = S.strength===key ? val.color : '#2a2a2a';
+    btn.innerHTML = '<div class="s-label">'+val.label+'</div><div class="s-desc" style="color:'+(S.strength===key?'rgba(255,255,255,0.75)':'#666')+'">'+val.desc+'</div>';
+    btn.onclick = function(){ S.strength=key; renderHome(); };
+    grid.appendChild(btn);
+  });
+  var slider = document.getElementById('water-slider');
+  slider.value = S.water;
+  slider.style.accentColor = acc;
+  var wd = document.getElementById('water-display');
+  wd.textContent = S.water+' ml';
+  wd.style.color = acc;
+  document.getElementById('summary-card').style.border = '1px solid '+acc+'33';
+  document.querySelectorAll('.summary-val').forEach(function(el){ el.style.color=acc; });
+  document.getElementById('sum-water').textContent = S.water;
+  document.getElementById('sum-coffee').textContent = getCoffee();
+  document.getElementById('sum-ratio').textContent = 'Ratio 1:'+str.ratio+' · Extraction ~3:00–3:30 min';
+  var list = document.getElementById('steps-preview');
+  list.innerHTML = '';
+  getStepsNow().forEach(function(s){
+    var div = document.createElement('div');
+    div.className = 'step-row';
+    div.innerHTML = '<span class="step-icon">'+s.icon+'</span><div class="step-title">'+s.title+'</div>'+(s.duration>0?'<span class="step-time" style="color:'+acc+';background:'+acc+'22">'+fmt(s.duration)+'</span>':'');
+    list.appendChild(div);
+  });
+  var sbtn = document.getElementById('btn-start');
+  sbtn.style.background = 'linear-gradient(135deg,'+acc+','+acc+'bb)';
+  sbtn.style.boxShadow = '0 4px 24px '+acc+'55';
+  var badge = document.getElementById('hist-badge');
+  if(S.history.length>0){ badge.style.display='inline'; badge.style.background=acc; badge.textContent=S.history.length; }
+  else { badge.style.display='none'; }
+}
+
+function renderBrew(){
+  var s = getStepsNow();
+  var cur = s[S.step];
+  var acc = getAccent();
+  var el = document.getElementById('brew-content');
+  document.getElementById('step-counter').textContent = 'Étape '+(S.done?s.length:S.step+1)+' / '+s.length;
+  if(S.done){
+    el.innerHTML = '<div class="done-wrap"><div class="done-icon">☕</div><h2 class="done-title">Bon café !</h2><p class="done-sub">'+S.water+'ml · '+getCoffee()+'g · '+STRENGTHS[S.strength].label+'</p><button id="btn-new" style="background:'+acc+';border:none;color:#fff;border-radius:14px;padding:16px 36px;font-size:16px;font-weight:600;width:100%;font-family:inherit">Nouveau café</button></div>';
+    document.getElementById('btn-new').onclick = function(){ showScreen('home'); renderHome(); };
+    return;
+  }
+  var dots = '<div class="dots">';
+  s.forEach(function(_,i){ dots+='<div class="dot" style="width:'+(i===S.step?20:7)+'px;background:'+(i<=S.step?acc:'#2a2a2a')+'"></div>'; });
+  dots += '</div>';
+  var badge = '';
+  if(cur.type==='versement') badge='<div class="badge versement">🌊 Temps de versement</div>';
+  else if(cur.type==='repos') badge='<div class="badge repos">⏸ Temps de repos</div>';
+  var target = cur.target ? '<div class="target-box"><span class="target-val" style="color:'+acc+'">'+cur.target+' ml</span><span class="target-unit"> objectif</span></div>' : '';
+  var timerHTML = '';
+  if(cur.duration > 0){
+    var r=54, circ=2*Math.PI*r;
+    var dash = circ*(S.timeLeft/cur.duration);
+    var btnLabel = S.running ? 'Pause ⏸' : (S.timeLeft===cur.duration ? 'Lancer ▶' : 'Reprendre ▶');
+    var btnBg = S.running ? '#2a2a2a' : acc;
+    timerHTML = '<div class="timer-wrap"><svg width="140" height="140" viewBox="0 0 130 130"><circle cx="65" cy="65" r="'+r+'" fill="none" stroke="#2a2a2a" stroke-width="8"/><circle cx="65" cy="65" r="'+r+'" fill="none" stroke="'+acc+'" stroke-width="8" stroke-dasharray="'+dash+' '+circ+'" stroke-linecap="round" transform="rotate(-90 65 65)" style="transition:stroke-dasharray 0.5s ease"/><text x="65" y="62" text-anchor="middle" fill="#fff" font-size="22" font-weight="bold" font-family="monospace">'+fmt(S.timeLeft)+'</text><text x="65" y="82" text-anchor="middle" fill="#888" font-size="11" font-family="sans-serif">restant</text></svg><div class="timer-btns"><button class="timer-btn" id="btn-timer" style="background:'+btnBg+'">'+btnLabel+'</button></div></div>';
+  }
+  var canNext = cur.duration===0 || S.timeLeft===0;
+  el.innerHTML = '<div class="card"><div class="card-icon">'+cur.icon+'</div><h2 class="card-title">'+cur.title+'</h2>'+badge+'<p class="card-desc">'+cur.desc+'</p>'+target+'</div>'+timerHTML+dots+'<button id="btn-next" class="next-btn" style="background:'+(canNext?acc:'#2a2a2a')+';color:'+(canNext?'#fff':'#555')+';box-shadow:'+(canNext?'0 4px 20px '+acc+'44':'none')+'">'+(S.step+1>=s.length?'Terminer ☕':'Étape suivante →')+'</button>';
+  var tb = document.getElementById('btn-timer');
+  if(tb) tb.onclick = function(){ S.running ? stopTimer() : startTimer(); };
+  document.getElementById('btn-next').onclick = function(){ if(canNext) nextStep(); };
+}
+
+function startTimer(){
+  if(S.running) return;
+  S.running = true;
+  S.interval = setInterval(function(){
+    S.timeLeft--;
+    if(S.timeLeft<=0){
+      S.timeLeft=0;
+      clearInterval(S.interval); S.interval=null; S.running=false;
+      renderBrew();
+      setTimeout(autoNext, 800);
+    } else { renderBrew(); }
+  }, 1000);
+  renderBrew();
+}
+
+function stopTimer(){
+  clearInterval(S.interval); S.interval=null; S.running=false;
+  renderBrew();
+}
+
+function autoNext(){
+  var s = getStepsNow();
+  if(S.step+1>=s.length){ S.done=true; saveHistory(); renderBrew(); return; }
+  S.step++;
+  S.timeLeft = s[S.step].duration;
+  S.running = false;
+  renderBrew();
+  if(s[S.step].duration>0) setTimeout(startTimer, 400);
+}
+
+function nextStep(){
+  clearInterval(S.interval); S.running=false;
+  var s = getStepsNow();
+  if(S.step+1>=s.length){ S.done=true; saveHistory(); }
+  else { S.step++; S.timeLeft=s[S.step].duration; }
+  renderBrew();
+}
+
+function saveHistory(){
+  var entry = { date:new Date().toLocaleString("fr-FR"), water:S.water, coffee:getCoffee(), strength:STRENGTHS[S.strength].label, id:Date.now() };
+  S.history = [entry].concat(S.history).slice(0,20);
+  try{ localStorage.setItem("v60h", JSON.stringify(S.history)); }catch(e){}
+}
+
+function renderHistory(){
+  var el = document.getElementById('hist-content');
+  if(S.history.length===0){
+    el.innerHTML='<div class="empty"><div class="empty-icon">☕</div><p style="margin-top:12px">Aucun café préparé</p></div>';
+    return;
+  }
+  var html='<div class="hist-list">';
+  S.history.forEach(function(h){
+    var col='#a0673a';
+    Object.values(STRENGTHS).forEach(function(s){ if(s.label===h.strength) col=s.color; });
+    html+='<div class="hist-item" style="border-left:3px solid '+col+'"><div class="hist-top"><span class="hist-name">'+h.strength+'</span><span class="hist-date">'+h.date+'</span></div><div class="hist-info">'+h.water+'ml · '+h.coffee+'g</div></div>';
+  });
+  html+='</div><button id="btn-clear" style="background:#2a1010;border:1px solid #5c2020;color:#f87171;border-radius:10px;padding:10px;width:100%;margin-top:12px;font-family:inherit;font-size:14px">Effacer l\'historique</button>';
+  el.innerHTML=html;
+  document.getElementById('btn-clear').onclick=function(){ S.history=[]; try{localStorage.removeItem("v60h");}catch(e){} renderHistory(); renderHome(); };
+}
+
+document.getElementById('water-slider').addEventListener('input', function(e){ S.water=Number(e.target.value); renderHome(); });
+document.getElementById('btn-start').onclick = function(){
+  S.step=0; S.done=false; S.running=false;
+  clearInterval(S.interval); S.interval=null;
+  S.timeLeft=getStepsNow()[0].duration;
+  showScreen('brew'); renderBrew();
+};
+document.getElementById('btn-brew-back').onclick = function(){ clearInterval(S.interval); S.running=false; showScreen('home'); renderHome(); };
+document.getElementById('btn-history').onclick = function(){ showScreen('history'); renderHistory(); };
+document.getElementById('btn-hist-back').onclick = function(){ showScreen('home'); renderHome(); };
+
+renderHome();
+</script>
+</body>
+</html>
