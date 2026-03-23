@@ -67,6 +67,17 @@
     .water-row{display:flex;justify-content:space-between;margin-bottom:10px;align-items:center}
     .water-minmax{display:flex;justify-content:space-between;margin-top:6px}
     .water-minmax span{font-size:11px;color:#444}
+    .toggle-row{display:flex;align-items:center;justify-content:space-between;background:#1a1a1a;border-radius:14px;padding:14px 18px;margin-bottom:28px}
+    .toggle-info{display:flex;flex-direction:column;gap:3px}
+    .toggle-label{font-size:14px;font-weight:600}
+    .toggle-desc{font-size:12px;color:#666}
+    .toggle-switch{position:relative;width:50px;height:28px;flex-shrink:0}
+    .toggle-switch input{opacity:0;width:0;height:0}
+    .toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#2a2a2a;border-radius:28px;transition:.3s}
+    .toggle-slider:before{position:absolute;content:"";height:22px;width:22px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+    input:checked + .toggle-slider:before{transform:translateX(22px)}
+    .logo-wrap{display:flex;align-items:center;gap:12px}
+    .v60-logo{width:42px;height:42px}
   </style>
 </head>
 <body>
@@ -74,9 +85,21 @@
 <div id="screen-home" class="screen active">
   <div class="wrap">
     <div class="row" style="margin-bottom:32px">
-      <div>
-        <h1 style="font-size:28px;font-weight:700">V60 Brew ☕</h1>
-        <p style="color:#666;font-size:14px;margin-top:4px">Guide de préparation</p>
+      <div class="logo-wrap">
+        <svg class="v60-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100" height="100" rx="22" fill="#1a1a1a"/>
+          <path d="M20 18 L50 78 L80 18 Z" fill="none" stroke="#a0673a" stroke-width="5" stroke-linejoin="round"/>
+          <rect x="16" y="13" width="68" height="8" rx="4" fill="#a0673a"/>
+          <rect x="44" y="78" width="12" height="6" rx="3" fill="#a0673a"/>
+          <rect x="34" y="84" width="32" height="5" rx="2.5" fill="#a0673a"/>
+          <line x1="35" y1="28" x2="44" y2="58" stroke="#a0673a" stroke-width="1.5" opacity="0.5"/>
+          <line x1="50" y1="25" x2="50" y2="68" stroke="#a0673a" stroke-width="1.5" opacity="0.5"/>
+          <line x1="65" y1="28" x2="56" y2="58" stroke="#a0673a" stroke-width="1.5" opacity="0.5"/>
+        </svg>
+        <div>
+          <h1 style="font-size:24px;font-weight:700">V60 Brew</h1>
+          <p style="color:#666;font-size:13px;margin-top:2px">Guide de préparation</p>
+        </div>
       </div>
       <button id="btn-history" style="background:#1e1e1e;border:none;color:#aaa;border-radius:10px;padding:8px 12px;font-size:13px;display:flex;align-items:center;gap:6px">
         📋 <span id="hist-badge" style="display:none;border-radius:6px;padding:1px 6px;font-size:11px;color:#fff"></span>
@@ -86,232 +109,4 @@
     <div class="strength-grid" id="strength-grid"></div>
     <div style="margin-bottom:28px">
       <div class="water-row">
-        <span style="font-size:12px;color:#666;text-transform:uppercase;letter-spacing:1px">Quantité d'eau</span>
-        <span id="water-display" style="font-weight:700;font-size:16px">500 ml</span>
-      </div>
-      <input type="range" id="water-slider" min="150" max="1000" step="50" value="500"/>
-      <div class="water-minmax"><span>150 ml</span><span>1000 ml</span></div>
-    </div>
-    <div class="summary" id="summary-card">
-      <div class="summary-grid">
-        <div><div class="summary-val" id="sum-water">500</div><div class="summary-unit">ml d'eau</div></div>
-        <div><div class="summary-val" id="sum-coffee">33</div><div class="summary-unit">g de café</div></div>
-        <div><div class="summary-val">90°</div><div class="summary-unit">température</div></div>
-      </div>
-      <div class="summary-footer" id="sum-ratio">Ratio 1:15 · Extraction ~3:00–3:30 min</div>
-    </div>
-    <span class="lbl">Étapes</span>
-    <div class="steps-list" id="steps-preview"></div>
-    <button id="btn-start" class="start-btn">Commencer la préparation ☕</button>
-  </div>
-</div>
-
-<div id="screen-brew" class="screen">
-  <div class="wrap">
-    <div class="row" style="margin-bottom:24px">
-      <button class="back-btn" id="btn-brew-back">←</button>
-      <span style="color:#666;font-size:14px" id="step-counter">Étape 1 / 8</span>
-    </div>
-    <div id="brew-content"></div>
-  </div>
-</div>
-
-<div id="screen-history" class="screen">
-  <div class="wrap">
-    <div class="row" style="margin-bottom:24px">
-      <button class="back-btn" id="btn-hist-back">←</button>
-      <h2 style="font-size:20px">Historique</h2>
-      <div style="width:46px"></div>
-    </div>
-    <div id="hist-content"></div>
-  </div>
-</div>
-
-<script>
-var STRENGTHS = {
-  light:  { label:"Léger",     ratio:16, color:"#c8a97e", desc:"Délicat & floral" },
-  medium: { label:"Équilibré", ratio:15, color:"#a0673a", desc:"Doux & aromatique" },
-  strong: { label:"Corsé",     ratio:13, color:"#6b3a1f", desc:"Intense & puissant" }
-};
-
-function getSteps(coffee, water) {
-  return [
-    { id:1, title:"Préparer le filtre",   type:null,        desc:"Rince le filtre avec de l'eau chaude. Préchauffe le V60 et ta tasse. Jette l'eau de rinçage.", duration:0,  icon:"🫧" },
-    { id:2, title:"Ajouter le café",      type:null,        desc:"Verse "+coffee+"g de café moulu moyen-fin. Fais un léger creux au centre. Lance le chrono.",    duration:0,  icon:"☕" },
-    { id:3, title:"Bloom – Pré-infusion", type:"repos",     desc:"Verse "+Math.round(coffee*2)+"ml en spirale puis pose ta bouilloire. Laisse reposer 45s sans toucher.", duration:45, icon:"💧", target:Math.round(coffee*2) },
-    { id:4, title:"1er versement",        type:"versement", desc:"Verse lentement en spirale jusqu'à "+Math.round(water*0.4)+"ml au total. Tu as 30s pour verser.", duration:30, icon:"🌊", target:Math.round(water*0.4) },
-    { id:5, title:"2e versement",         type:"versement", desc:"Verse à nouveau jusqu'à "+Math.round(water*0.7)+"ml au total. Tu as 30s pour verser.",           duration:30, icon:"🌊", target:Math.round(water*0.7) },
-    { id:6, title:"3e versement (final)", type:"versement", desc:"Verse jusqu'à "+water+"ml au total. Finis au centre. Tu as 30s pour verser.",                    duration:30, icon:"🌊", target:water },
-    { id:7, title:"Extraction",           type:"repos",     desc:"Pose ta bouilloire et laisse s'écouler complètement. Ne touche à rien. Doit finir entre 3:00 et 3:30 min.", duration:90, icon:"⏳" },
-    { id:8, title:"Déguster !",           type:null,        desc:"Retire le V60, agite légèrement ta tasse et savoure. Bon café !",                               duration:0,  icon:"✨" }
-  ];
-}
-
-function fmt(s){ var m=Math.floor(s/60),sec=s%60; return m+":"+(sec<10?"0":"")+sec; }
-
-var S = {
-  water:500, strength:"medium", step:0, timeLeft:0,
-  running:false, done:false, interval:null,
-  history: (function(){ try{ return JSON.parse(localStorage.getItem("v60h")||"[]"); }catch(e){ return []; } })()
-};
-
-function getCoffee(){ return Math.round(S.water / STRENGTHS[S.strength].ratio); }
-function getAccent(){ return STRENGTHS[S.strength].color; }
-function getStepsNow(){ return getSteps(getCoffee(), S.water); }
-
-function showScreen(name){
-  document.querySelectorAll('.screen').forEach(function(el){ el.classList.remove('active'); });
-  document.getElementById('screen-'+name).classList.add('active');
-}
-
-function renderHome(){
-  var acc = getAccent();
-  var str = STRENGTHS[S.strength];
-  var grid = document.getElementById('strength-grid');
-  grid.innerHTML = '';
-  Object.keys(STRENGTHS).forEach(function(key){
-    var val = STRENGTHS[key];
-    var btn = document.createElement('button');
-    btn.className = 'strength-btn';
-    btn.style.background = S.strength===key ? val.color : '#1a1a1a';
-    btn.style.borderColor = S.strength===key ? val.color : '#2a2a2a';
-    btn.innerHTML = '<div class="s-label">'+val.label+'</div><div class="s-desc" style="color:'+(S.strength===key?'rgba(255,255,255,0.75)':'#666')+'">'+val.desc+'</div>';
-    btn.onclick = function(){ S.strength=key; renderHome(); };
-    grid.appendChild(btn);
-  });
-  var slider = document.getElementById('water-slider');
-  slider.value = S.water;
-  slider.style.accentColor = acc;
-  var wd = document.getElementById('water-display');
-  wd.textContent = S.water+' ml';
-  wd.style.color = acc;
-  document.getElementById('summary-card').style.border = '1px solid '+acc+'33';
-  document.querySelectorAll('.summary-val').forEach(function(el){ el.style.color=acc; });
-  document.getElementById('sum-water').textContent = S.water;
-  document.getElementById('sum-coffee').textContent = getCoffee();
-  document.getElementById('sum-ratio').textContent = 'Ratio 1:'+str.ratio+' · Extraction ~3:00–3:30 min';
-  var list = document.getElementById('steps-preview');
-  list.innerHTML = '';
-  getStepsNow().forEach(function(s){
-    var div = document.createElement('div');
-    div.className = 'step-row';
-    div.innerHTML = '<span class="step-icon">'+s.icon+'</span><div class="step-title">'+s.title+'</div>'+(s.duration>0?'<span class="step-time" style="color:'+acc+';background:'+acc+'22">'+fmt(s.duration)+'</span>':'');
-    list.appendChild(div);
-  });
-  var sbtn = document.getElementById('btn-start');
-  sbtn.style.background = 'linear-gradient(135deg,'+acc+','+acc+'bb)';
-  sbtn.style.boxShadow = '0 4px 24px '+acc+'55';
-  var badge = document.getElementById('hist-badge');
-  if(S.history.length>0){ badge.style.display='inline'; badge.style.background=acc; badge.textContent=S.history.length; }
-  else { badge.style.display='none'; }
-}
-
-function renderBrew(){
-  var s = getStepsNow();
-  var cur = s[S.step];
-  var acc = getAccent();
-  var el = document.getElementById('brew-content');
-  document.getElementById('step-counter').textContent = 'Étape '+(S.done?s.length:S.step+1)+' / '+s.length;
-  if(S.done){
-    el.innerHTML = '<div class="done-wrap"><div class="done-icon">☕</div><h2 class="done-title">Bon café !</h2><p class="done-sub">'+S.water+'ml · '+getCoffee()+'g · '+STRENGTHS[S.strength].label+'</p><button id="btn-new" style="background:'+acc+';border:none;color:#fff;border-radius:14px;padding:16px 36px;font-size:16px;font-weight:600;width:100%;font-family:inherit">Nouveau café</button></div>';
-    document.getElementById('btn-new').onclick = function(){ showScreen('home'); renderHome(); };
-    return;
-  }
-  var dots = '<div class="dots">';
-  s.forEach(function(_,i){ dots+='<div class="dot" style="width:'+(i===S.step?20:7)+'px;background:'+(i<=S.step?acc:'#2a2a2a')+'"></div>'; });
-  dots += '</div>';
-  var badge = '';
-  if(cur.type==='versement') badge='<div class="badge versement">🌊 Temps de versement</div>';
-  else if(cur.type==='repos') badge='<div class="badge repos">⏸ Temps de repos</div>';
-  var target = cur.target ? '<div class="target-box"><span class="target-val" style="color:'+acc+'">'+cur.target+' ml</span><span class="target-unit"> objectif</span></div>' : '';
-  var timerHTML = '';
-  if(cur.duration > 0){
-    var r=54, circ=2*Math.PI*r;
-    var dash = circ*(S.timeLeft/cur.duration);
-    var btnLabel = S.running ? 'Pause ⏸' : (S.timeLeft===cur.duration ? 'Lancer ▶' : 'Reprendre ▶');
-    var btnBg = S.running ? '#2a2a2a' : acc;
-    timerHTML = '<div class="timer-wrap"><svg width="140" height="140" viewBox="0 0 130 130"><circle cx="65" cy="65" r="'+r+'" fill="none" stroke="#2a2a2a" stroke-width="8"/><circle cx="65" cy="65" r="'+r+'" fill="none" stroke="'+acc+'" stroke-width="8" stroke-dasharray="'+dash+' '+circ+'" stroke-linecap="round" transform="rotate(-90 65 65)" style="transition:stroke-dasharray 0.5s ease"/><text x="65" y="62" text-anchor="middle" fill="#fff" font-size="22" font-weight="bold" font-family="monospace">'+fmt(S.timeLeft)+'</text><text x="65" y="82" text-anchor="middle" fill="#888" font-size="11" font-family="sans-serif">restant</text></svg><div class="timer-btns"><button class="timer-btn" id="btn-timer" style="background:'+btnBg+'">'+btnLabel+'</button></div></div>';
-  }
-  var canNext = cur.duration===0 || S.timeLeft===0;
-  el.innerHTML = '<div class="card"><div class="card-icon">'+cur.icon+'</div><h2 class="card-title">'+cur.title+'</h2>'+badge+'<p class="card-desc">'+cur.desc+'</p>'+target+'</div>'+timerHTML+dots+'<button id="btn-next" class="next-btn" style="background:'+(canNext?acc:'#2a2a2a')+';color:'+(canNext?'#fff':'#555')+';box-shadow:'+(canNext?'0 4px 20px '+acc+'44':'none')+'">'+(S.step+1>=s.length?'Terminer ☕':'Étape suivante →')+'</button>';
-  var tb = document.getElementById('btn-timer');
-  if(tb) tb.onclick = function(){ S.running ? stopTimer() : startTimer(); };
-  document.getElementById('btn-next').onclick = function(){ if(canNext) nextStep(); };
-}
-
-function startTimer(){
-  if(S.running) return;
-  S.running = true;
-  S.interval = setInterval(function(){
-    S.timeLeft--;
-    if(S.timeLeft<=0){
-      S.timeLeft=0;
-      clearInterval(S.interval); S.interval=null; S.running=false;
-      renderBrew();
-      setTimeout(autoNext, 800);
-    } else { renderBrew(); }
-  }, 1000);
-  renderBrew();
-}
-
-function stopTimer(){
-  clearInterval(S.interval); S.interval=null; S.running=false;
-  renderBrew();
-}
-
-function autoNext(){
-  var s = getStepsNow();
-  if(S.step+1>=s.length){ S.done=true; saveHistory(); renderBrew(); return; }
-  S.step++;
-  S.timeLeft = s[S.step].duration;
-  S.running = false;
-  renderBrew();
-  if(s[S.step].duration>0) setTimeout(startTimer, 400);
-}
-
-function nextStep(){
-  clearInterval(S.interval); S.running=false;
-  var s = getStepsNow();
-  if(S.step+1>=s.length){ S.done=true; saveHistory(); }
-  else { S.step++; S.timeLeft=s[S.step].duration; }
-  renderBrew();
-}
-
-function saveHistory(){
-  var entry = { date:new Date().toLocaleString("fr-FR"), water:S.water, coffee:getCoffee(), strength:STRENGTHS[S.strength].label, id:Date.now() };
-  S.history = [entry].concat(S.history).slice(0,20);
-  try{ localStorage.setItem("v60h", JSON.stringify(S.history)); }catch(e){}
-}
-
-function renderHistory(){
-  var el = document.getElementById('hist-content');
-  if(S.history.length===0){
-    el.innerHTML='<div class="empty"><div class="empty-icon">☕</div><p style="margin-top:12px">Aucun café préparé</p></div>';
-    return;
-  }
-  var html='<div class="hist-list">';
-  S.history.forEach(function(h){
-    var col='#a0673a';
-    Object.values(STRENGTHS).forEach(function(s){ if(s.label===h.strength) col=s.color; });
-    html+='<div class="hist-item" style="border-left:3px solid '+col+'"><div class="hist-top"><span class="hist-name">'+h.strength+'</span><span class="hist-date">'+h.date+'</span></div><div class="hist-info">'+h.water+'ml · '+h.coffee+'g</div></div>';
-  });
-  html+='</div><button id="btn-clear" style="background:#2a1010;border:1px solid #5c2020;color:#f87171;border-radius:10px;padding:10px;width:100%;margin-top:12px;font-family:inherit;font-size:14px">Effacer l\'historique</button>';
-  el.innerHTML=html;
-  document.getElementById('btn-clear').onclick=function(){ S.history=[]; try{localStorage.removeItem("v60h");}catch(e){} renderHistory(); renderHome(); };
-}
-
-document.getElementById('water-slider').addEventListener('input', function(e){ S.water=Number(e.target.value); renderHome(); });
-document.getElementById('btn-start').onclick = function(){
-  S.step=0; S.done=false; S.running=false;
-  clearInterval(S.interval); S.interval=null;
-  S.timeLeft=getStepsNow()[0].duration;
-  showScreen('brew'); renderBrew();
-};
-document.getElementById('btn-brew-back').onclick = function(){ clearInterval(S.interval); S.running=false; showScreen('home'); renderHome(); };
-document.getElementById('btn-history').onclick = function(){ showScreen('history'); renderHistory(); };
-document.getElementById('btn-hist-back').onclick = function(){ showScreen('home'); renderHome(); };
-
-renderHome();
-</script>
-</body>
-</html>
+        <span style="font-size:12​​​​​​​​​​​​​​​​
