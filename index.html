@@ -9,75 +9,71 @@
   <meta name="theme-color" content="#0f0f0f"/>
   <title>V60 Brew</title>
   <style>
-    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-    html,body{height:100%;background:#0f0f0f;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overscroll-behavior:none}
-    input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:#2a2a2a;outline:none;width:100%}
-    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;cursor:pointer}
-    ::-webkit-scrollbar{display:none}
-    button{font-family:inherit;cursor:pointer}
-    .screen{display:none;min-height:100vh;padding:50px 16px 40px;overflow-y:auto}
-    .screen.active{display:block}
-    .wrap{max-width:420px;margin:0 auto}
-    .row{display:flex;align-items:center;justify-content:space-between}
-    .back-btn{background:#1e1e1e;border:none;color:#fff;border-radius:10px;padding:8px 14px;font-size:18px}
-    .badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:10px}
-    .badge.versement{background:#1a3a2a;color:#4ade80;border:1px solid #4ade8055}
-    .badge.repos{background:#1a2a3a;color:#60a5fa;border:1px solid #60a5fa55}
-    .dots{display:flex;justify-content:center;gap:6px;margin-bottom:20px}
-    .dot{height:7px;border-radius:4px;background:#2a2a2a;transition:all .3s}
-    .timer-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:16px}
-    .timer-btns{display:flex;gap:10px;margin-top:10px}
-    .timer-btn{border:none;color:#fff;border-radius:12px;padding:10px 28px;font-size:15px;font-weight:600;font-family:inherit}
-    .next-btn{width:100%;border:none;color:#fff;border-radius:14px;padding:16px;font-size:16px;font-weight:700;font-family:inherit;transition:all .3s}
-    .strength-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:28px}
-    .strength-btn{border-radius:14px;padding:14px 6px;border:2px solid #2a2a2a;color:#fff;background:#1a1a1a;text-align:center;transition:all .2s;font-family:inherit}
-    .s-label{font-size:13px;font-weight:700}
-    .s-desc{font-size:11px;color:#666;margin-top:3px}
-    .summary{background:#1a1a1a;border-radius:18px;padding:20px;margin-bottom:28px}
-    .summary-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center}
-    .summary-val{font-size:24px;font-weight:700}
-    .summary-unit{font-size:11px;color:#666;margin-top:3px}
-    .summary-footer{border-top:1px solid #2a2a2a;margin-top:16px;padding-top:12px;text-align:center;color:#555;font-size:13px}
-    .steps-list{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
-    .step-row{display:flex;align-items:center;gap:12px;background:#1a1a1a;border-radius:12px;padding:10px 14px}
-    .step-icon{font-size:20px;min-width:28px;text-align:center}
-    .step-title{flex:1;font-size:14px;font-weight:500}
-    .step-time{font-size:12px;border-radius:6px;padding:2px 8px;white-space:nowrap}
-    .start-btn{width:100%;border:none;color:#fff;border-radius:16px;padding:18px;font-size:18px;font-weight:700;font-family:inherit}
-    .card{background:#1a1a1a;border-radius:20px;padding:28px 24px;margin-bottom:20px;text-align:center;border:1px solid #2a2a2a}
-    .card-icon{font-size:48px;margin-bottom:10px}
-    .card-title{font-size:20px;margin-bottom:10px;font-weight:700}
-    .card-desc{color:#aaa;font-size:15px;line-height:1.6}
-    .target-box{margin-top:14px;background:#252525;border-radius:10px;padding:8px 16px;display:inline-block}
-    .target-val{font-size:20px;font-weight:700}
-    .target-unit{color:#666;font-size:13px}
-    .hist-list{display:flex;flex-direction:column;gap:10px}
-    .hist-item{background:#1a1a1a;border-radius:14px;padding:14px 18px}
-    .hist-top{display:flex;justify-content:space-between}
-    .hist-name{font-weight:600}
-    .hist-date{font-size:12px;color:#666}
-    .hist-info{color:#aaa;font-size:14px;margin-top:4px}
-    .empty{text-align:center;color:#555;margin-top:80px}
-    .empty-icon{font-size:56px}
-    .done-wrap{text-align:center;padding-top:60px}
-    .done-icon{font-size:80px;margin-bottom:16px}
-    .done-title{font-size:28px;margin-bottom:8px;font-weight:700}
-    .done-sub{color:#888;margin-bottom:40px}
-    .lbl{font-size:12px;color:#666;margin-bottom:10px;display:block;text-transform:uppercase;letter-spacing:1px}
-    .water-row{display:flex;justify-content:space-between;margin-bottom:10px;align-items:center}
-    .water-minmax{display:flex;justify-content:space-between;margin-top:6px}
-    .water-minmax span{font-size:11px;color:#444}
-    .toggle-row{display:flex;align-items:center;justify-content:space-between;background:#1a1a1a;border-radius:14px;padding:14px 18px;margin-bottom:28px}
-    .toggle-info{display:flex;flex-direction:column;gap:3px}
-    .toggle-label{font-size:14px;font-weight:600}
-    .toggle-desc{font-size:12px;color:#666}
-    .toggle-switch{position:relative;width:50px;height:28px;flex-shrink:0}
-    .toggle-switch input{opacity:0;width:0;height:0}
-    .toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#2a2a2a;border-radius:28px;transition:.3s}
-    .toggle-slider:before{position:absolute;content:"";height:22px;width:22px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
-    input:checked + .toggle-slider:before{transform:translateX(22px)}
-    .logo-wrap{display:flex;align-items:center;gap:12px}
-    .v60-logo{width:42px;height:42px}
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+    html,body{height:100%;background:#0f0f0f;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overscroll-behavior:none;}
+    input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:#2a2a2a;outline:none;width:100%;}
+    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;cursor:pointer;background:#a0673a;}
+    button{font-family:inherit;cursor:pointer;}
+    .screen{display:none;min-height:100vh;padding:50px 16px 40px;overflow-y:auto;}
+    .screen.active{display:block;}
+    .wrap{max-width:420px;margin:0 auto;}
+    .row{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:space-between;justify-content:space-between;}
+    .back-btn{background:#1e1e1e;border:none;color:#fff;border-radius:10px;padding:8px 14px;font-size:18px;}
+    .badge-v{display:inline-block;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:10px;background:#1a3a2a;color:#4ade80;border:1px solid #2a5a3a;}
+    .badge-r{display:inline-block;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:10px;background:#1a2a3a;color:#60a5fa;border:1px solid #2a3a5a;}
+    .dots{display:-webkit-flex;display:flex;-webkit-justify-content:center;justify-content:center;gap:6px;margin-bottom:20px;}
+    .dot{height:7px;border-radius:4px;background:#2a2a2a;-webkit-transition:all .3s;transition:all .3s;}
+    .timer-wrap{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;-webkit-align-items:center;align-items:center;margin-bottom:16px;}
+    .timer-btns{display:-webkit-flex;display:flex;gap:10px;margin-top:10px;}
+    .timer-btn{border:none;color:#fff;border-radius:12px;padding:10px 28px;font-size:15px;font-weight:600;font-family:inherit;}
+    .next-btn{width:100%;border:none;color:#fff;border-radius:14px;padding:16px;font-size:16px;font-weight:700;font-family:inherit;}
+    .strength-grid{display:-webkit-flex;display:flex;gap:10px;margin-bottom:28px;}
+    .strength-btn{-webkit-flex:1;flex:1;border-radius:14px;padding:14px 6px;border:2px solid #2a2a2a;color:#fff;background:#1a1a1a;text-align:center;font-family:inherit;}
+    .s-label{font-size:13px;font-weight:700;}
+    .s-desc{font-size:11px;color:#666;margin-top:3px;}
+    .summary{background:#1a1a1a;border-radius:18px;padding:20px;margin-bottom:28px;border:1px solid #2a2a2a;}
+    .summary-grid{display:-webkit-flex;display:flex;gap:12px;text-align:center;}
+    .summary-col{-webkit-flex:1;flex:1;}
+    .summary-val{font-size:24px;font-weight:700;color:#a0673a;}
+    .summary-unit{font-size:11px;color:#666;margin-top:3px;}
+    .summary-footer{border-top:1px solid #2a2a2a;margin-top:16px;padding-top:12px;text-align:center;color:#555;font-size:13px;}
+    .steps-list{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;gap:8px;margin-bottom:28px;}
+    .step-row{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;gap:12px;background:#1a1a1a;border-radius:12px;padding:10px 14px;}
+    .step-icon{font-size:20px;min-width:28px;text-align:center;}
+    .step-title{-webkit-flex:1;flex:1;font-size:14px;font-weight:500;}
+    .step-time{font-size:12px;border-radius:6px;padding:2px 8px;white-space:nowrap;background:#2a1a0a;color:#a0673a;}
+    .start-btn{width:100%;border:none;color:#fff;border-radius:16px;padding:18px;font-size:18px;font-weight:700;font-family:inherit;background:#a0673a;}
+    .card{background:#1a1a1a;border-radius:20px;padding:28px 24px;margin-bottom:20px;text-align:center;border:1px solid #2a2a2a;}
+    .card-icon{font-size:48px;margin-bottom:10px;}
+    .card-title{font-size:20px;margin-bottom:10px;font-weight:700;}
+    .card-desc{color:#aaa;font-size:15px;line-height:1.6;}
+    .target-box{margin-top:14px;background:#252525;border-radius:10px;padding:8px 16px;display:inline-block;}
+    .target-val{font-size:20px;font-weight:700;color:#a0673a;}
+    .target-unit{color:#666;font-size:13px;}
+    .hist-list{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;gap:10px;}
+    .hist-item{background:#1a1a1a;border-radius:14px;padding:14px 18px;}
+    .hist-top{display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;}
+    .hist-name{font-weight:600;}
+    .hist-date{font-size:12px;color:#666;}
+    .hist-info{color:#aaa;font-size:14px;margin-top:4px;}
+    .empty{text-align:center;color:#555;margin-top:80px;}
+    .done-wrap{text-align:center;padding-top:60px;}
+    .lbl{font-size:12px;color:#666;margin-bottom:10px;display:block;text-transform:uppercase;letter-spacing:1px;}
+    .water-row{display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;margin-bottom:10px;-webkit-align-items:center;align-items:center;}
+    .water-minmax{display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;margin-top:6px;}
+    .water-minmax span{font-size:11px;color:#444;}
+    .toggle-row{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:space-between;justify-content:space-between;background:#1a1a1a;border-radius:14px;padding:14px 18px;margin-bottom:28px;border:1px solid #2a2a2a;}
+    .toggle-info{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;gap:3px;}
+    .toggle-label{font-size:14px;font-weight:600;}
+    .toggle-desc{font-size:12px;color:#666;}
+    .toggle-switch{position:relative;width:50px;height:28px;-webkit-flex-shrink:0;flex-shrink:0;}
+    .toggle-switch input{opacity:0;width:0;height:0;}
+    .toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#2a2a2a;border-radius:28px;-webkit-transition:.3s;transition:.3s;}
+    .toggle-slider:before{position:absolute;content:"";height:22px;width:22px;left:3px;bottom:3px;background:#fff;border-radius:50%;-webkit-transition:.3s;transition:.3s;}
+    input:checked + .toggle-slider{background:#a0673a;}
+    input:checked + .toggle-slider:before{-webkit-transform:translateX(22px);transform:translateX(22px);}
+    .logo-wrap{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;gap:12px;}
+    .mode-badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;background:#2a2a2a;color:#888;}
   </style>
 </head>
 <body>
@@ -86,27 +82,286 @@
   <div class="wrap">
     <div class="row" style="margin-bottom:32px">
       <div class="logo-wrap">
-        <svg class="v60-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="42" height="42" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <rect width="100" height="100" rx="22" fill="#1a1a1a"/>
-          <path d="M20 18 L50 78 L80 18 Z" fill="none" stroke="#a0673a" stroke-width="5" stroke-linejoin="round"/>
+          <polygon points="20,18 50,78 80,18" fill="none" stroke="#a0673a" stroke-width="5" stroke-linejoin="round"/>
           <rect x="16" y="13" width="68" height="8" rx="4" fill="#a0673a"/>
           <rect x="44" y="78" width="12" height="6" rx="3" fill="#a0673a"/>
-          <rect x="34" y="84" width="32" height="5" rx="2.5" fill="#a0673a"/>
-          <line x1="35" y1="28" x2="44" y2="58" stroke="#a0673a" stroke-width="1.5" opacity="0.5"/>
-          <line x1="50" y1="25" x2="50" y2="68" stroke="#a0673a" stroke-width="1.5" opacity="0.5"/>
-          <line x1="65" y1="28" x2="56" y2="58" stroke="#a0673a" stroke-width="1.5" opacity="0.5"/>
+          <rect x="34" y="84" width="32" height="5" rx="2" fill="#a0673a"/>
         </svg>
         <div>
-          <h1 style="font-size:24px;font-weight:700">V60 Brew</h1>
-          <p style="color:#666;font-size:13px;margin-top:2px">Guide de préparation</p>
+          <h1 style="font-size:24px;font-weight:700;">V60 Brew</h1>
+          <p style="color:#666;font-size:13px;margin-top:2px;">Guide de préparation</p>
         </div>
       </div>
-      <button id="btn-history" style="background:#1e1e1e;border:none;color:#aaa;border-radius:10px;padding:8px 12px;font-size:13px;display:flex;align-items:center;gap:6px">
-        📋 <span id="hist-badge" style="display:none;border-radius:6px;padding:1px 6px;font-size:11px;color:#fff"></span>
+      <button id="btn-history" style="background:#1e1e1e;border:none;color:#aaa;border-radius:10px;padding:8px 12px;font-size:13px;">
+        📋 <span id="hist-badge" style="display:none;border-radius:6px;padding:1px 6px;font-size:11px;color:#fff;background:#a0673a;"></span>
       </button>
     </div>
     <span class="lbl">Niveau de corsé</span>
     <div class="strength-grid" id="strength-grid"></div>
-    <div style="margin-bottom:28px">
+    <div style="margin-bottom:28px;">
       <div class="water-row">
-        <span style="font-size:12​​​​​​​​​​​​​​​​
+        <span style="font-size:12px;color:#666;text-transform:uppercase;letter-spacing:1px;">Quantité d'eau</span>
+        <span id="water-display" style="font-weight:700;font-size:16px;color:#a0673a;">500 ml</span>
+      </div>
+      <input type="range" id="water-slider" min="150" max="1000" step="50" value="500"/>
+      <div class="water-minmax"><span>150 ml</span><span>1000 ml</span></div>
+    </div>
+    <div class="summary" id="summary-card">
+      <div class="summary-grid">
+        <div class="summary-col"><div class="summary-val" id="sum-water">500</div><div class="summary-unit">ml d'eau</div></div>
+        <div class="summary-col"><div class="summary-val" id="sum-coffee">33</div><div class="summary-unit">g de café</div></div>
+        <div class="summary-col"><div class="summary-val">90°</div><div class="summary-unit">température</div></div>
+      </div>
+      <div class="summary-footer" id="sum-ratio">Ratio 1:15 · Extraction ~3:00–3:30 min</div>
+    </div>
+    <div class="toggle-row" id="toggle-row">
+      <div class="toggle-info">
+        <span class="toggle-label" id="toggle-label">⚡ Passage automatique</span>
+        <span class="toggle-desc" id="toggle-desc">Les étapes avancent seules</span>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="auto-toggle" checked/>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <span class="lbl">Étapes</span>
+    <div class="steps-list" id="steps-preview"></div>
+    <button id="btn-start" class="start-btn">Commencer la préparation ☕</button>
+  </div>
+</div>
+
+<div id="screen-brew" class="screen">
+  <div class="wrap">
+    <div class="row" style="margin-bottom:24px;">
+      <button class="back-btn" id="btn-brew-back">←</button>
+      <span style="color:#666;font-size:14px;" id="step-counter">Étape 1 / 8</span>
+      <span class="mode-badge" id="mode-badge">⚡ Auto</span>
+    </div>
+    <div id="brew-content"></div>
+  </div>
+</div>
+
+<div id="screen-history" class="screen">
+  <div class="wrap">
+    <div class="row" style="margin-bottom:24px;">
+      <button class="back-btn" id="btn-hist-back">←</button>
+      <h2 style="font-size:20px;">Historique</h2>
+      <div style="width:46px;"></div>
+    </div>
+    <div id="hist-content"></div>
+  </div>
+</div>
+
+<script>
+var STRENGTHS = [
+  { key:"light",  label:"Léger",     ratio:16, color:"#c8a97e", desc:"Délicat & floral" },
+  { key:"medium", label:"Équilibré", ratio:15, color:"#a0673a", desc:"Doux & aromatique" },
+  { key:"strong", label:"Corsé",     ratio:13, color:"#6b3a1f", desc:"Intense & puissant" }
+];
+
+function getStrength(key) {
+  for(var i=0;i<STRENGTHS.length;i++){ if(STRENGTHS[i].key===key) return STRENGTHS[i]; }
+  return STRENGTHS[1];
+}
+
+function getSteps(coffee, water) {
+  return [
+    { id:1, title:"Préparer le filtre",   type:"",          desc:"Rince le filtre avec de l'eau chaude. Préchauffe le V60 et ta tasse. Jette l'eau de rinçage.", duration:0,  icon:"🫧" },
+    { id:2, title:"Ajouter le café",      type:"",          desc:"Verse "+coffee+"g de café moulu moyen-fin. Fais un léger creux au centre. Lance le chrono.",    duration:0,  icon:"☕" },
+    { id:3, title:"Bloom – Pré-infusion", type:"repos",     desc:"Verse "+Math.round(coffee*2)+"ml en spirale puis pose ta bouilloire. Laisse reposer 45s sans toucher.", duration:45, icon:"💧", target:Math.round(coffee*2) },
+    { id:4, title:"1er versement",        type:"versement", desc:"Verse lentement en spirale jusqu'à "+Math.round(water*0.4)+"ml au total. Tu as 30s pour verser.", duration:30, icon:"🌊", target:Math.round(water*0.4) },
+    { id:5, title:"2e versement",         type:"versement", desc:"Verse à nouveau jusqu'à "+Math.round(water*0.7)+"ml au total. Tu as 30s pour verser.",           duration:30, icon:"🌊", target:Math.round(water*0.7) },
+    { id:6, title:"3e versement (final)", type:"versement", desc:"Verse jusqu'à "+water+"ml au total. Finis au centre. Tu as 30s pour verser.",                    duration:30, icon:"🌊", target:water },
+    { id:7, title:"Extraction",           type:"repos",     desc:"Pose ta bouilloire et laisse s'écouler complètement. Ne touche à rien. Doit finir entre 3:00 et 3:30 min.", duration:90, icon:"⏳" },
+    { id:8, title:"Déguster !",           type:"",          desc:"Retire le V60, agite légèrement ta tasse et savoure. Bon café !",                               duration:0,  icon:"✨" }
+  ];
+}
+
+function fmt(s){ var m=Math.floor(s/60),sec=s%60; return m+":"+(sec<10?"0":"")+sec; }
+
+var S = {
+  water:500, strengthKey:"medium", step:0, timeLeft:0,
+  running:false, done:false, interval:null, autoMode:true,
+  history:[]
+};
+
+try{ var h=localStorage.getItem("v60h"); if(h) S.history=JSON.parse(h); }catch(e){}
+
+function getCoffee(){ return Math.round(S.water / getStrength(S.strengthKey).ratio); }
+function getAccent(){ return getStrength(S.strengthKey).color; }
+function getStepsNow(){ return getSteps(getCoffee(), S.water); }
+
+function showScreen(name){
+  var screens = document.querySelectorAll('.screen');
+  for(var i=0;i<screens.length;i++) screens[i].classList.remove('active');
+  document.getElementById('screen-'+name).classList.add('active');
+}
+
+function renderHome(){
+  var acc = getAccent();
+  var str = getStrength(S.strengthKey);
+  var grid = document.getElementById('strength-grid');
+  grid.innerHTML = '';
+  for(var i=0;i<STRENGTHS.length;i++){
+    (function(val){
+      var btn = document.createElement('button');
+      btn.className = 'strength-btn';
+      btn.style.background = S.strengthKey===val.key ? val.color : '#1a1a1a';
+      btn.style.borderColor = S.strengthKey===val.key ? val.color : '#2a2a2a';
+      btn.innerHTML = '<div class="s-label">'+val.label+'</div><div class="s-desc">'+val.desc+'</div>';
+      btn.onclick = function(){ S.strengthKey=val.key; renderHome(); };
+      grid.appendChild(btn);
+    })(STRENGTHS[i]);
+  }
+  document.getElementById('water-slider').value = S.water;
+  document.getElementById('water-display').textContent = S.water+' ml';
+  document.getElementById('water-display').style.color = acc;
+  document.getElementById('sum-water').textContent = S.water;
+  document.getElementById('sum-coffee').textContent = getCoffee();
+  document.getElementById('sum-ratio').textContent = 'Ratio 1:'+str.ratio+' · Extraction ~3:00–3:30 min';
+  var svals = document.querySelectorAll('.summary-val');
+  for(var j=0;j<svals.length;j++) svals[j].style.color = acc;
+  document.getElementById('toggle-label').textContent = S.autoMode ? '⚡ Passage automatique' : '👆 Passage manuel';
+  document.getElementById('toggle-desc').textContent = S.autoMode ? 'Les étapes avancent seules' : 'Tu contrôles chaque étape';
+  var list = document.getElementById('steps-preview');
+  list.innerHTML = '';
+  var steps = getStepsNow();
+  for(var k=0;k<steps.length;k++){
+    (function(s){
+      var div = document.createElement('div');
+      div.className = 'step-row';
+      var timeHtml = s.duration>0 ? '<span class="step-time">'+fmt(s.duration)+'</span>' : '';
+      div.innerHTML = '<span class="step-icon">'+s.icon+'</span><div class="step-title">'+s.title+'</div>'+timeHtml;
+      list.appendChild(div);
+    })(steps[k]);
+  }
+  document.getElementById('btn-start').style.background = acc;
+  var badge = document.getElementById('hist-badge');
+  if(S.history.length>0){ badge.style.display='inline'; badge.style.background=acc; badge.textContent=S.history.length; }
+  else { badge.style.display='none'; }
+}
+
+function renderBrew(){
+  var steps = getStepsNow();
+  var cur = steps[S.step];
+  var acc = getAccent();
+  var el = document.getElementById('brew-content');
+  document.getElementById('step-counter').textContent = 'Étape '+(S.done?steps.length:S.step+1)+' / '+steps.length;
+  var mb = document.getElementById('mode-badge');
+  mb.textContent = S.autoMode ? '⚡ Auto' : '👆 Manuel';
+  if(S.done){
+    el.innerHTML = '<div class="done-wrap"><div style="font-size:80px;margin-bottom:16px;">☕</div><h2 style="font-size:28px;margin-bottom:8px;font-weight:700;">Bon café !</h2><p style="color:#888;margin-bottom:40px;">'+S.water+'ml · '+getCoffee()+'g · '+getStrength(S.strengthKey).label+'</p><button id="btn-new" style="background:'+acc+';border:none;color:#fff;border-radius:14px;padding:16px;font-size:16px;font-weight:600;width:100%;font-family:inherit;">Nouveau café</button></div>';
+    document.getElementById('btn-new').onclick = function(){ showScreen('home'); renderHome(); };
+    return;
+  }
+  var dots = '<div class="dots">';
+  for(var i=0;i<steps.length;i++){
+    dots += '<div class="dot" style="width:'+(i===S.step?'20px':'7px')+';background:'+(i<=S.step?acc:'#2a2a2a')+'"></div>';
+  }
+  dots += '</div>';
+  var typeBadge = '';
+  if(cur.type==='versement') typeBadge='<div class="badge-v">🌊 Temps de versement</div>';
+  else if(cur.type==='repos') typeBadge='<div class="badge-r">⏸ Temps de repos</div>';
+  var targetHtml = cur.target ? '<div class="target-box"><span class="target-val">'+cur.target+' ml</span><span class="target-unit"> objectif</span></div>' : '';
+  var timerHtml = '';
+  if(cur.duration>0){
+    var r=54, circ=2*Math.PI*r;
+    var dash = circ*(S.timeLeft/cur.duration);
+    var btnLabel = S.running ? 'Pause ⏸' : (S.timeLeft===cur.duration ? 'Lancer ▶' : 'Reprendre ▶');
+    var btnBg = S.running ? '#2a2a2a' : acc;
+    timerHtml = '<div class="timer-wrap"><svg width="140" height="140" viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><circle cx="65" cy="65" r="'+r+'" fill="none" stroke="#2a2a2a" stroke-width="8"/><circle cx="65" cy="65" r="'+r+'" fill="none" stroke="'+acc+'" stroke-width="8" stroke-dasharray="'+dash+' '+circ+'" stroke-linecap="round" transform="rotate(-90 65 65)"/><text x="65" y="62" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="bold" font-family="monospace">'+fmt(S.timeLeft)+'</text><text x="65" y="82" text-anchor="middle" fill="#888888" font-size="11" font-family="sans-serif">restant</text></svg><div class="timer-btns"><button class="timer-btn" id="btn-timer" style="background:'+btnBg+';">'+btnLabel+'</button></div></div>';
+  }
+  var canNext = cur.duration===0 || S.timeLeft===0;
+  var showNext = !S.autoMode || canNext;
+  el.innerHTML = '<div class="card"><div class="card-icon">'+cur.icon+'</div><h2 class="card-title">'+cur.title+'</h2>'+typeBadge+'<p class="card-desc">'+cur.desc+'</p>'+targetHtml+'</div>'+timerHtml+dots+'<button id="btn-next" class="next-btn" style="background:'+(showNext?acc:'#2a2a2a')+';color:'+(showNext?'#fff':'#555')+';">'+(S.step+1>=steps.length?'Terminer ☕':'Étape suivante →')+'</button>';
+  var tb = document.getElementById('btn-timer');
+  if(tb) tb.onclick = function(){ if(S.running) stopTimer(); else startTimer(); };
+  document.getElementById('btn-next').onclick = function(){ if(!S.autoMode || canNext) nextStep(); };
+}
+
+function startTimer(){
+  if(S.running) return;
+  S.running = true;
+  S.interval = setInterval(function(){
+    S.timeLeft--;
+    if(S.timeLeft<=0){
+      S.timeLeft=0;
+      clearInterval(S.interval); S.interval=null; S.running=false;
+      renderBrew();
+      if(S.autoMode) setTimeout(autoNext, 800);
+    } else { renderBrew(); }
+  }, 1000);
+  renderBrew();
+}
+
+function stopTimer(){
+  clearInterval(S.interval); S.interval=null; S.running=false;
+  renderBrew();
+}
+
+function autoNext(){
+  var steps = getStepsNow();
+  if(S.step+1>=steps.length){ S.done=true; saveHistory(); renderBrew(); return; }
+  S.step++;
+  S.timeLeft = steps[S.step].duration;
+  S.running = false;
+  renderBrew();
+  if(steps[S.step].duration>0) setTimeout(startTimer, 400);
+}
+
+function nextStep(){
+  clearInterval(S.interval); S.running=false;
+  var steps = getStepsNow();
+  if(S.step+1>=steps.length){ S.done=true; saveHistory(); }
+  else { S.step++; S.timeLeft=steps[S.step].duration; }
+  renderBrew();
+}
+
+function saveHistory(){
+  var str = getStrength(S.strengthKey);
+  var entry = { date:new Date().toLocaleString("fr-FR"), water:S.water, coffee:getCoffee(), strength:str.label, mode:S.autoMode?'Auto':'Manuel', id:Date.now() };
+  S.history.unshift(entry);
+  if(S.history.length>20) S.history.pop();
+  try{ localStorage.setItem("v60h", JSON.stringify(S.history)); }catch(e){}
+}
+
+function renderHistory(){
+  var el = document.getElementById('hist-content');
+  if(S.history.length===0){
+    el.innerHTML='<div class="empty"><div style="font-size:56px;">☕</div><p style="margin-top:12px;">Aucun café préparé</p></div>';
+    return;
+  }
+  var html='<div class="hist-list">';
+  for(var i=0;i<S.history.length;i++){
+    var h=S.history[i];
+    var col='#a0673a';
+    for(var j=0;j<STRENGTHS.length;j++){ if(STRENGTHS[j].label===h.strength){ col=STRENGTHS[j].color; break; } }
+    html+='<div class="hist-item" style="border-left:3px solid '+col+';"><div class="hist-top"><span class="hist-name">'+h.strength+'</span><span class="hist-date">'+h.date+'</span></div><div class="hist-info">'+h.water+'ml · '+h.coffee+'g · '+(h.mode||'')+'</div></div>';
+  }
+  html+='</div><button id="btn-clear" style="background:#2a1010;border:1px solid #5c2020;color:#f87171;border-radius:10px;padding:10px;width:100%;margin-top:12px;font-family:inherit;font-size:14px;">Effacer l\'historique</button>';
+  el.innerHTML=html;
+  document.getElementById('btn-clear').onclick=function(){
+    S.history=[];
+    try{ localStorage.removeItem("v60h"); }catch(e){}
+    renderHistory(); renderHome();
+  };
+}
+
+document.getElementById('water-slider').addEventListener('input', function(e){ S.water=Number(e.target.value); renderHome(); });
+document.getElementById('auto-toggle').addEventListener('change', function(e){ S.autoMode=e.target.checked; renderHome(); });
+document.getElementById('btn-start').onclick = function(){
+  S.step=0; S.done=false; S.running=false;
+  clearInterval(S.interval); S.interval=null;
+  S.timeLeft=getStepsNow()[0].duration;
+  showScreen('brew'); renderBrew();
+};
+document.getElementById('btn-brew-back').onclick = function(){ clearInterval(S.interval); S.running=false; showScreen('home'); renderHome(); };
+document.getElementById('btn-history').onclick = function(){ showScreen('history'); renderHistory(); };
+document.getElementById('btn-hist-back').onclick = function(){ showScreen('home'); renderHome(); };
+
+window.onload = function(){ renderHome(); };
+</script>
+</body>
+</html>
