@@ -34,7 +34,7 @@
     .summary{background:#1a1a1a;border-radius:18px;padding:20px;margin-bottom:28px;border:1px solid #2a2a2a;}
     .summary-grid{display:-webkit-flex;display:flex;gap:12px;text-align:center;}
     .summary-col{-webkit-flex:1;flex:1;}
-    .summary-val{font-size:24px;font-weight:700;color:#a0673a;}
+    .summary-val{font-size:24px;font-weight:700;}
     .summary-unit{font-size:11px;color:#666;margin-top:3px;}
     .summary-footer{border-top:1px solid #2a2a2a;margin-top:16px;padding-top:12px;text-align:center;color:#555;font-size:13px;}
     .steps-list{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;gap:8px;margin-bottom:28px;}
@@ -42,13 +42,13 @@
     .step-icon{font-size:20px;min-width:28px;text-align:center;}
     .step-title{-webkit-flex:1;flex:1;font-size:14px;font-weight:500;}
     .step-time{font-size:12px;border-radius:6px;padding:2px 8px;white-space:nowrap;background:#2a1a0a;color:#a0673a;}
-    .start-btn{width:100%;border:none;color:#fff;border-radius:16px;padding:18px;font-size:18px;font-weight:700;font-family:inherit;background:#a0673a;}
+    .start-btn{width:100%;border:none;color:#fff;border-radius:16px;padding:18px;font-size:18px;font-weight:700;font-family:inherit;}
     .card{background:#1a1a1a;border-radius:20px;padding:28px 24px;margin-bottom:20px;text-align:center;border:1px solid #2a2a2a;}
     .card-icon{font-size:48px;margin-bottom:10px;}
     .card-title{font-size:20px;margin-bottom:10px;font-weight:700;}
     .card-desc{color:#aaa;font-size:15px;line-height:1.6;}
     .target-box{margin-top:14px;background:#252525;border-radius:10px;padding:8px 16px;display:inline-block;}
-    .target-val{font-size:20px;font-weight:700;color:#a0673a;}
+    .target-val{font-size:20px;font-weight:700;}
     .target-unit{color:#666;font-size:13px;}
     .hist-list{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;gap:10px;}
     .hist-item{background:#1a1a1a;border-radius:14px;padding:14px 18px;}
@@ -70,17 +70,14 @@
     .toggle-switch input{opacity:0;width:0;height:0;}
     .toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#2a2a2a;border-radius:28px;-webkit-transition:.3s;transition:.3s;}
     .toggle-slider:before{position:absolute;content:"";height:22px;width:22px;left:3px;bottom:3px;background:#fff;border-radius:50%;-webkit-transition:.3s;transition:.3s;}
-    input:checked + .toggle-slider{background:#a0673a;}
     input:checked + .toggle-slider:before{-webkit-transform:translateX(22px);transform:translateX(22px);}
     .logo-wrap{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;gap:12px;}
     .mode-badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;background:#2a2a2a;color:#888;}
     .method-tabs{display:-webkit-flex;display:flex;gap:10px;margin-bottom:28px;}
-    .method-tab{-webkit-flex:1;flex:1;border:2px solid #2a2a2a;border-radius:14px;padding:14px 6px;background:#1a1a1a;color:#fff;text-align:center;font-family:inherit;}
-    .method-tab.active-tab{border-color:#1e6091;background:#1e6091;}
-    .cb-card{background:#0d1f2d;border:1px solid #1e3a4a;border-radius:20px;padding:24px;margin-bottom:20px;}
-    .cb-progress-bar{width:100%;height:12px;background:#1a2a3a;border-radius:6px;overflow:hidden;margin:16px 0;}
-    .cb-progress-fill{height:100%;background:linear-gradient(90deg,#1e6091,#60c8f5);border-radius:6px;-webkit-transition:width .5s;transition:width .5s;}
+    .method-tab{-webkit-flex:1;flex:1;border:2px solid #2a2a2a;border-radius:14px;padding:14px 6px;background:#1a1a1a;color:#fff;text-align:center;font-family:inherit;font-size:14px;font-weight:600;}
     .cb-time-display{font-size:48px;font-weight:700;color:#60c8f5;text-align:center;font-family:monospace;margin:16px 0;}
+    .cb-progress-bar{width:100%;height:12px;background:#1a2a3a;border-radius:6px;overflow:hidden;margin:16px 0;}
+    .cb-progress-fill{height:100%;background:linear-gradient(90deg,#1e6091,#60c8f5);border-radius:6px;}
     .cb-info-grid{display:-webkit-flex;display:flex;gap:10px;margin-bottom:20px;}
     .cb-info-box{-webkit-flex:1;flex:1;background:#0d1f2d;border:1px solid #1e3a4a;border-radius:12px;padding:12px;text-align:center;}
     .cb-info-val{font-size:20px;font-weight:700;color:#60c8f5;}
@@ -96,7 +93,6 @@
     .cb-done-banner{background:#0d3a1a;border:1px solid #1a6030;border-radius:16px;padding:20px;text-align:center;margin-bottom:20px;}
     .duration-grid{display:-webkit-flex;display:flex;gap:10px;margin-bottom:20px;}
     .duration-btn{-webkit-flex:1;flex:1;border:2px solid #1e3a4a;border-radius:12px;padding:12px 6px;background:#0d1f2d;color:#fff;text-align:center;font-family:inherit;}
-    .duration-btn.active-dur{border-color:#60c8f5;background:#1e3a4a;}
   </style>
 </head>
 <body>
@@ -122,7 +118,7 @@
       </button>
     </div>
     <div class="method-tabs">
-      <button class="method-tab active-tab" id="tab-v60" onclick="switchMethod('v60')">☕ V60</button>
+      <button class="method-tab" id="tab-v60" onclick="switchMethod('v60')">☕ V60</button>
       <button class="method-tab" id="tab-coldbrew" onclick="switchMethod('coldbrew')">🧊 Cold Brew</button>
     </div>
     <div id="section-v60">
@@ -131,7 +127,7 @@
       <div style="margin-bottom:28px;">
         <div class="water-row">
           <span style="font-size:12px;color:#666;text-transform:uppercase;letter-spacing:1px;">Quantité d'eau</span>
-          <span id="water-display" style="font-weight:700;font-size:16px;color:#a0673a;">500 ml</span>
+          <span id="water-display" style="font-weight:700;font-size:16px;">500 ml</span>
         </div>
         <input type="range" id="water-slider" min="150" max="1000" step="50" value="500"/>
         <div class="water-minmax"><span>150 ml</span><span>1000 ml</span></div>
@@ -151,7 +147,7 @@
         </div>
         <label class="toggle-switch">
           <input type="checkbox" id="auto-toggle" checked/>
-          <span class="toggle-slider"></span>
+          <span class="toggle-slider" id="toggle-slider"></span>
         </label>
       </div>
       <span class="lbl">Étapes</span>
@@ -159,24 +155,33 @@
       <button id="btn-start" class="start-btn">Commencer la préparation ☕</button>
     </div>
     <div id="section-coldbrew" style="display:none;">
-      <div style="margin-bottom:20px;">
+      <span class="lbl">Intensité</span>
+      <div class="strength-grid" id="cb-ratio-grid"></div>
+      <div style="margin-bottom:28px;">
         <div class="water-row">
           <span style="font-size:12px;color:#666;text-transform:uppercase;letter-spacing:1px;">Quantité d'eau</span>
           <span id="cb-water-display" style="font-weight:700;font-size:16px;color:#60c8f5;">500 ml</span>
         </div>
-        <input type="range" id="cb-water-slider" min="500" max="2000" step="100" value="500" style="accent-color:#60c8f5;"/>
+        <input type="range" id="cb-water-slider" min="500" max="2000" step="100" value="500"/>
         <div class="water-minmax"><span>500 ml</span><span>2000 ml</span></div>
       </div>
-      <div class="cb-info-grid" id="cb-summary"></div>
+      <div class="summary" id="cb-summary-card" style="border:1px solid #1e3a4a;">
+        <div class="summary-grid">
+          <div class="summary-col"><div class="summary-val" id="cb-sum-water" style="color:#60c8f5;">500</div><div class="summary-unit">ml d'eau</div></div>
+          <div class="summary-col"><div class="summary-val" id="cb-sum-coffee" style="color:#60c8f5;">63</div><div class="summary-unit">g de café</div></div>
+          <div class="summary-col"><div class="summary-val" style="color:#60c8f5;">4°</div><div class="summary-unit">température</div></div>
+        </div>
+        <div class="summary-footer" id="cb-sum-ratio">Ratio 1:8 · Infusion 12–24h au frigo</div>
+      </div>
       <span class="lbl">Durée d'infusion</span>
       <div class="duration-grid">
-        <button class="duration-btn active-dur" id="dur-12" onclick="setCBDuration(12)"><div style="font-size:16px;font-weight:700;">12h</div><div style="font-size:11px;color:#888;margin-top:2px;">Doux</div></button>
+        <button class="duration-btn" id="dur-12" onclick="setCBDuration(12)"><div style="font-size:16px;font-weight:700;">12h</div><div style="font-size:11px;color:#888;margin-top:2px;">Doux</div></button>
         <button class="duration-btn" id="dur-18" onclick="setCBDuration(18)"><div style="font-size:16px;font-weight:700;">18h</div><div style="font-size:11px;color:#888;margin-top:2px;">Équilibré</div></button>
         <button class="duration-btn" id="dur-24" onclick="setCBDuration(24)"><div style="font-size:16px;font-weight:700;">24h</div><div style="font-size:11px;color:#888;margin-top:2px;">Intense</div></button>
       </div>
       <span class="lbl">Étapes de préparation</span>
       <div class="cb-steps" id="cb-steps-preview"></div>
-      <button id="btn-cb-start" style="width:100%;border:none;color:#fff;border-radius:16px;padding:18px;font-size:18px;font-weight:700;font-family:inherit;background:#1e6091;margin-top:8px;">Lancer l'infusion 🧊</button>
+      <button id="btn-cb-start" class="start-btn" style="background:#1e6091;">Lancer l'infusion 🧊</button>
     </div>
   </div>
 </div>
@@ -215,34 +220,39 @@
 </div>
 
 <script>
-var STRENGTHS = [
+var V60_STRENGTHS = [
   { key:"light",  label:"Léger",     ratio:16, color:"#c8a97e", desc:"Délicat & floral" },
   { key:"medium", label:"Équilibré", ratio:15, color:"#a0673a", desc:"Doux & aromatique" },
   { key:"strong", label:"Corsé",     ratio:13, color:"#6b3a1f", desc:"Intense & puissant" }
 ];
-function getStrength(key){ for(var i=0;i<STRENGTHS.length;i++){ if(STRENGTHS[i].key===key) return STRENGTHS[i]; } return STRENGTHS[1]; }
+var CB_RATIOS = [
+  { key:"light",  label:"Léger",     ratio:12, color:"#4a9aba", desc:"Doux & délicat" },
+  { key:"medium", label:"Normal",    ratio:10, color:"#1e6091", desc:"Équilibré" },
+  { key:"strong", label:"Concentré", ratio:8,  color:"#0d3a5a", desc:"Fort & intense" }
+];
+function getV60Strength(key){ for(var i=0;i<V60_STRENGTHS.length;i++){ if(V60_STRENGTHS[i].key===key) return V60_STRENGTHS[i]; } return V60_STRENGTHS[1]; }
+function getCBRatio(key){ for(var i=0;i<CB_RATIOS.length;i++){ if(CB_RATIOS[i].key===key) return CB_RATIOS[i]; } return CB_RATIOS[1]; }
 
-function getSteps(coffee, water) {
+function getV60Steps(coffee, water) {
   return [
     { id:1, title:"Préparer le filtre",   type:"",          desc:"Rince le filtre avec de l'eau chaude. Préchauffe le V60 et ta tasse. Jette l'eau de rinçage.", duration:0,  icon:"🫧" },
     { id:2, title:"Ajouter le café",      type:"",          desc:"Verse "+coffee+"g de café moulu moyen-fin. Fais un léger creux au centre. Lance le chrono.",    duration:0,  icon:"☕" },
-    { id:3, title:"Bloom – Pré-infusion", type:"repos",     desc:"Verse "+Math.round(coffee*2)+"ml en spirale puis pose ta bouilloire. Laisse reposer 45s sans toucher.", duration:45, icon:"💧", target:Math.round(coffee*2) },
-    { id:4, title:"1er versement",        type:"versement", desc:"Verse lentement en spirale jusqu'à "+Math.round(water*0.4)+"ml au total. Tu as 30s pour verser.", duration:30, icon:"🌊", target:Math.round(water*0.4) },
-    { id:5, title:"2e versement",         type:"versement", desc:"Verse à nouveau jusqu'à "+Math.round(water*0.7)+"ml au total. Tu as 30s pour verser.",           duration:30, icon:"🌊", target:Math.round(water*0.7) },
-    { id:6, title:"3e versement (final)", type:"versement", desc:"Verse jusqu'à "+water+"ml au total. Finis au centre. Tu as 30s pour verser.",                    duration:30, icon:"🌊", target:water },
-    { id:7, title:"Extraction",           type:"repos",     desc:"Pose ta bouilloire et laisse s'écouler complètement. Ne touche à rien. Doit finir entre 3:00 et 3:30 min.", duration:90, icon:"⏳" },
-    { id:8, title:"Déguster !",           type:"",          desc:"Retire le V60, agite légèrement ta tasse et savoure. Bon café !",                               duration:0,  icon:"✨" }
+    { id:3, title:"Bloom – Pré-infusion", type:"repos",     desc:"Verse "+Math.round(coffee*2)+"ml en spirale puis pose ta bouilloire. Laisse reposer 45s.", duration:45, icon:"💧", target:Math.round(coffee*2) },
+    { id:4, title:"1er versement",        type:"versement", desc:"Verse lentement en spirale jusqu'à "+Math.round(water*0.4)+"ml au total. Tu as 30s.", duration:30, icon:"🌊", target:Math.round(water*0.4) },
+    { id:5, title:"2e versement",         type:"versement", desc:"Verse à nouveau jusqu'à "+Math.round(water*0.7)+"ml au total. Tu as 30s.",           duration:30, icon:"🌊", target:Math.round(water*0.7) },
+    { id:6, title:"3e versement (final)", type:"versement", desc:"Verse jusqu'à "+water+"ml au total. Finis au centre. Tu as 30s.",                    duration:30, icon:"🌊", target:water },
+    { id:7, title:"Extraction",           type:"repos",     desc:"Laisse s'écouler complètement. Doit finir entre 3:00 et 3:30 min.", duration:90, icon:"⏳" },
+    { id:8, title:"Déguster !",           type:"",          desc:"Retire le V60, agite ta tasse et savoure. Bon café !",             duration:0,  icon:"✨" }
   ];
 }
-
 function getCBSteps(coffee, water, hours) {
   return [
     { num:1, text:"Moudre "+coffee+"g de café très grossièrement (comme du gros sel)." },
     { num:2, text:"Mettre le café moulu dans un récipient propre (carafe, bocal...)." },
-    { num:3, text:"Verser "+water+"ml d'eau froide ou à température ambiante sur le café." },
+    { num:3, text:"Verser "+water+"ml d'eau froide sur le café." },
     { num:4, text:"Mélanger doucement pour bien mouiller tout le café." },
     { num:5, text:"Couvrir et placer au réfrigérateur pendant "+hours+"h." },
-    { num:6, text:"Filtrer le café à travers un filtre papier ou une étamine fine." },
+    { num:6, text:"Filtrer à travers un filtre papier ou une étamine fine." },
     { num:7, text:"Conserver au frigo jusqu'à 2 semaines. Déguster pur ou dilué ! 🧊" }
   ];
 }
@@ -251,18 +261,18 @@ function fmt(s){ var m=Math.floor(s/60),sec=s%60; return m+":"+(sec<10?"0":"")+s
 function fmtHMS(s){ var h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60; return (h<10?"0":"")+h+"h"+(m<10?"0":"")+m+"m"+(sec<10?"0":"")+sec+"s"; }
 
 var S = {
-  water:500, strengthKey:"medium", step:0, timeLeft:0,
+  water:500, v60Key:"medium", step:0, timeLeft:0,
   running:false, done:false, interval:null, autoMode:true, method:"v60",
-  cb:{ water:500, hours:12, startTime:null, duration:0, active:false },
+  cb:{ water:500, hours:12, ratioKey:"medium", startTime:null, duration:0, active:false },
   history:[]
 };
 try{ var hh=localStorage.getItem("v60h"); if(hh) S.history=JSON.parse(hh); }catch(e){}
-try{ var cb=localStorage.getItem("v60cb"); if(cb){ var cbs=JSON.parse(cb); S.cb.startTime=cbs.startTime; S.cb.duration=cbs.duration; S.cb.water=cbs.water||500; S.cb.hours=cbs.hours||12; S.cb.active=cbs.active||false; } }catch(e){}
+try{ var cbs=localStorage.getItem("v60cb"); if(cbs){ var c=JSON.parse(cbs); S.cb.startTime=c.startTime; S.cb.duration=c.duration; S.cb.water=c.water||500; S.cb.hours=c.hours||12; S.cb.ratioKey=c.ratioKey||"medium"; S.cb.active=c.active||false; } }catch(e){}
 
-function getCoffee(){ return Math.round(S.water / getStrength(S.strengthKey).ratio); }
-function getCBCoffee(){ return Math.round(S.cb.water / 8); }
-function getAccent(){ return getStrength(S.strengthKey).color; }
-function getStepsNow(){ return getSteps(getCoffee(), S.water); }
+function getCoffee(){ return Math.round(S.water/getV60Strength(S.v60Key).ratio); }
+function getCBCoffee(){ return Math.round(S.cb.water/getCBRatio(S.cb.ratioKey).ratio); }
+function getV60Accent(){ return getV60Strength(S.v60Key).color; }
+function getStepsNow(){ return getV60Steps(getCoffee(),S.water); }
 
 function showScreen(name){
   var screens=document.querySelectorAll('.screen');
@@ -274,34 +284,42 @@ function switchMethod(m){
   S.method=m;
   document.getElementById('section-v60').style.display=m==='v60'?'block':'none';
   document.getElementById('section-coldbrew').style.display=m==='coldbrew'?'block':'none';
-  document.getElementById('tab-v60').className='method-tab'+(m==='v60'?' active-tab':'');
-  document.getElementById('tab-coldbrew').className='method-tab'+(m==='coldbrew'?' active-tab':'');
-  if(m==='coldbrew') renderCBHome();
+  var tv=document.getElementById('tab-v60');
+  var tc=document.getElementById('tab-coldbrew');
+  var acc=getV60Accent();
+  if(m==='v60'){ tv.style.background=acc; tv.style.borderColor=acc; tv.style.color='#fff'; tc.style.background='#1a1a1a'; tc.style.borderColor='#2a2a2a'; tc.style.color='#aaa'; }
+  else { tc.style.background='#1e6091'; tc.style.borderColor='#1e6091'; tc.style.color='#fff'; tv.style.background='#1a1a1a'; tv.style.borderColor='#2a2a2a'; tv.style.color='#aaa'; renderCBHome(); }
 }
 
 function renderHome(){
-  var acc=getAccent(), str=getStrength(S.strengthKey);
+  var acc=getV60Accent(), str=getV60Strength(S.v60Key);
+  var tv=document.getElementById('tab-v60');
+  tv.style.background=acc; tv.style.borderColor=acc; tv.style.color='#fff';
+  var tc=document.getElementById('tab-coldbrew');
+  tc.style.background='#1a1a1a'; tc.style.borderColor='#2a2a2a'; tc.style.color='#aaa';
   var grid=document.getElementById('strength-grid');
   grid.innerHTML='';
-  for(var i=0;i<STRENGTHS.length;i++){
+  for(var i=0;i<V60_STRENGTHS.length;i++){
     (function(val){
       var btn=document.createElement('button');
       btn.className='strength-btn';
-      btn.style.background=S.strengthKey===val.key?val.color:'#1a1a1a';
-      btn.style.borderColor=S.strengthKey===val.key?val.color:'#2a2a2a';
+      btn.style.background=S.v60Key===val.key?val.color:'#1a1a1a';
+      btn.style.borderColor=S.v60Key===val.key?val.color:'#2a2a2a';
       btn.innerHTML='<div class="s-label">'+val.label+'</div><div class="s-desc">'+val.desc+'</div>';
-      btn.onclick=function(){ S.strengthKey=val.key; renderHome(); };
+      btn.onclick=function(){ S.v60Key=val.key; renderHome(); };
       grid.appendChild(btn);
-    })(STRENGTHS[i]);
+    })(V60_STRENGTHS[i]);
   }
   document.getElementById('water-slider').value=S.water;
   document.getElementById('water-display').textContent=S.water+' ml';
   document.getElementById('water-display').style.color=acc;
   document.getElementById('sum-water').textContent=S.water;
+  document.getElementById('sum-water').style.color=acc;
   document.getElementById('sum-coffee').textContent=getCoffee();
+  document.getElementById('sum-coffee').style.color=acc;
   document.getElementById('sum-ratio').textContent='Ratio 1:'+str.ratio+' · Extraction ~3:00–3:30 min';
-  var svals=document.querySelectorAll('.summary-val');
-  for(var j=0;j<svals.length;j++) svals[j].style.color=acc;
+  document.getElementById('summary-card').style.border='1px solid '+acc+'55';
+  document.getElementById('toggle-slider').style.background=S.autoMode?acc:'#2a2a2a';
   document.getElementById('toggle-label').textContent=S.autoMode?'⚡ Passage automatique':'👆 Passage manuel';
   document.getElementById('toggle-desc').textContent=S.autoMode?'Les étapes avancent seules':'Tu contrôles chaque étape';
   var list=document.getElementById('steps-preview');
@@ -311,7 +329,7 @@ function renderHome(){
     (function(s){
       var div=document.createElement('div');
       div.className='step-row';
-      div.innerHTML='<span class="step-icon">'+s.icon+'</span><div class="step-title">'+s.title+'</div>'+(s.duration>0?'<span class="step-time">'+fmt(s.duration)+'</span>':'');
+      div.innerHTML='<span class="step-icon">'+s.icon+'</span><div class="step-title">'+s.title+'</div>'+(s.duration>0?'<span class="step-time" style="color:'+acc+';background:'+acc+'22;">'+fmt(s.duration)+'</span>':'');
       list.appendChild(div);
     })(steps[k]);
   }
@@ -322,31 +340,43 @@ function renderHome(){
 }
 
 function renderCBHome(){
-  document.getElementById('cb-water-display').textContent=S.cb.water+' ml';
+  var cbr=getCBRatio(S.cb.ratioKey);
+  var grid=document.getElementById('cb-ratio-grid');
+  grid.innerHTML='';
+  for(var i=0;i<CB_RATIOS.length;i++){
+    (function(val){
+      var btn=document.createElement('button');
+      btn.className='strength-btn';
+      btn.style.background=S.cb.ratioKey===val.key?val.color:'#0d1f2d';
+      btn.style.borderColor=S.cb.ratioKey===val.key?val.color:'#1e3a4a';
+      btn.style.color='#fff';
+      btn.innerHTML='<div class="s-label">'+val.label+'</div><div class="s-desc" style="color:'+(S.cb.ratioKey===val.key?'rgba(255,255,255,0.8)':'#555')+'">'+val.desc+'</div>';
+      btn.onclick=function(){ S.cb.ratioKey=val.key; renderCBHome(); };
+      grid.appendChild(btn);
+    })(CB_RATIOS[i]);
+  }
   document.getElementById('cb-water-slider').value=S.cb.water;
+  document.getElementById('cb-water-display').textContent=S.cb.water+' ml';
+  document.getElementById('cb-sum-water').textContent=S.cb.water;
+  document.getElementById('cb-sum-coffee').textContent=getCBCoffee();
+  document.getElementById('cb-sum-ratio').textContent='Ratio 1:'+cbr.ratio+' · Infusion '+S.cb.hours+'h au frigo';
+  document.getElementById('dur-12').style.borderColor=S.cb.hours===12?'#60c8f5':'#1e3a4a';
+  document.getElementById('dur-12').style.background=S.cb.hours===12?'#1e3a4a':'#0d1f2d';
+  document.getElementById('dur-18').style.borderColor=S.cb.hours===18?'#60c8f5':'#1e3a4a';
+  document.getElementById('dur-18').style.background=S.cb.hours===18?'#1e3a4a':'#0d1f2d';
+  document.getElementById('dur-24').style.borderColor=S.cb.hours===24?'#60c8f5':'#1e3a4a';
+  document.getElementById('dur-24').style.background=S.cb.hours===24?'#1e3a4a':'#0d1f2d';
   var coffee=getCBCoffee();
-  document.getElementById('cb-summary').innerHTML=
-    '<div class="cb-info-box"><div class="cb-info-val">'+S.cb.water+'</div><div class="cb-info-unit">ml d\'eau froide</div></div>'+
-    '<div class="cb-info-box"><div class="cb-info-val">'+coffee+'</div><div class="cb-info-unit">g de café grossier</div></div>'+
-    '<div class="cb-info-box"><div class="cb-info-val">1:8</div><div class="cb-info-unit">ratio café/eau</div></div>';
   var cbSteps=getCBSteps(coffee,S.cb.water,S.cb.hours);
   var html='';
-  for(var i=0;i<cbSteps.length;i++) html+='<div class="cb-step"><div class="cb-step-num">'+cbSteps[i].num+'</div><div class="cb-step-text">'+cbSteps[i].text+'</div></div>';
+  for(var j=0;j<cbSteps.length;j++) html+='<div class="cb-step"><div class="cb-step-num">'+cbSteps[j].num+'</div><div class="cb-step-text">'+cbSteps[j].text+'</div></div>';
   document.getElementById('cb-steps-preview').innerHTML=html;
-  if(S.cb.active&&S.cb.startTime){
-    var elapsed=Math.floor((Date.now()-S.cb.startTime)/1000);
-    if(elapsed<S.cb.duration){ document.getElementById('btn-cb-start').textContent='⏱ Infusion en cours — voir le timer'; document.getElementById('btn-cb-start').style.background='#0d3a4a'; }
-    else { document.getElementById('btn-cb-start').textContent='✅ Infusion terminée — voir le résultat'; document.getElementById('btn-cb-start').style.background='#0d3a1a'; }
-  } else { document.getElementById('btn-cb-start').textContent='Lancer l\'infusion 🧊'; document.getElementById('btn-cb-start').style.background='#1e6091'; }
+  var sbtn=document.getElementById('btn-cb-start');
+  if(S.cb.active&&S.cb.startTime){ var elapsed=Math.floor((Date.now()-S.cb.startTime)/1000); if(elapsed<S.cb.duration){ sbtn.textContent='⏱ Infusion en cours — voir le timer'; sbtn.style.background='#0d3a4a'; } else { sbtn.textContent='✅ Terminée — voir le résultat'; sbtn.style.background='#0d3a1a'; } }
+  else { sbtn.textContent="Lancer l'infusion 🧊"; sbtn.style.background='#1e6091'; }
 }
 
-function setCBDuration(h){
-  S.cb.hours=h;
-  document.getElementById('dur-12').className='duration-btn'+(h===12?' active-dur':'');
-  document.getElementById('dur-18').className='duration-btn'+(h===18?' active-dur':'');
-  document.getElementById('dur-24').className='duration-btn'+(h===24?' active-dur':'');
-  renderCBHome();
-}
+function setCBDuration(h){ S.cb.hours=h; renderCBHome(); }
 
 var cbInterval=null;
 function renderCBScreen(){
@@ -358,12 +388,13 @@ function renderCBScreen(){
   var isDone=remaining<=0;
   var endDate=new Date(S.cb.startTime+S.cb.duration*1000);
   var endStr=endDate.toLocaleString('fr-FR',{weekday:'short',hour:'2-digit',minute:'2-digit'});
+  var cbr=getCBRatio(S.cb.ratioKey);
   if(isDone){
-    el.innerHTML='<div class="cb-done-banner"><div style="font-size:60px;margin-bottom:12px;">🧊✅</div><h2 style="font-size:22px;font-weight:700;color:#4ade80;margin-bottom:8px;">Ton Cold Brew est prêt !</h2><p style="color:#aaa;font-size:14px;">'+S.cb.water+'ml · '+getCBCoffee()+'g · '+S.cb.hours+'h d\'infusion</p></div><div class="cb-card"><p style="color:#aaa;font-size:15px;line-height:1.6;">Filtre le café à travers un filtre papier ou une étamine. Conserve au frigo jusqu\'à 2 semaines. Déguste pur ou dilué avec de l\'eau ou du lait ! ☕</p></div><button id="btn-cb-reset" style="width:100%;background:#2a1010;border:1px solid #5c2020;color:#f87171;border-radius:14px;padding:16px;font-size:16px;font-weight:600;font-family:inherit;">Nouvelle infusion</button>';
+    el.innerHTML='<div class="cb-done-banner"><div style="font-size:60px;margin-bottom:12px;">🧊✅</div><h2 style="font-size:22px;font-weight:700;color:#4ade80;margin-bottom:8px;">Ton Cold Brew est prêt !</h2><p style="color:#aaa;font-size:14px;">'+S.cb.water+'ml · '+getCBCoffee()+'g · '+cbr.label+' · '+S.cb.hours+'h</p></div><div style="background:#0d1f2d;border:1px solid #1e3a4a;border-radius:20px;padding:20px;margin-bottom:20px;"><p style="color:#aaa;font-size:15px;line-height:1.6;">Filtre le café à travers un filtre papier. Conserve au frigo jusqu\'à 2 semaines. Déguste pur ou dilué ! ☕</p></div><button id="btn-cb-reset" style="width:100%;background:#2a1010;border:1px solid #5c2020;color:#f87171;border-radius:14px;padding:16px;font-size:16px;font-weight:600;font-family:inherit;">Nouvelle infusion</button>';
     document.getElementById('btn-cb-reset').onclick=resetCB;
     clearInterval(cbInterval);
   } else {
-    el.innerHTML='<div class="cb-card"><div style="font-size:36px;margin-bottom:8px;">🧊</div><div style="font-size:13px;color:#60c8f5;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Temps restant</div><div class="cb-time-display">'+fmtHMS(remaining)+'</div><div class="cb-progress-bar"><div class="cb-progress-fill" style="width:'+pct+'%;"></div></div><div style="font-size:13px;color:#555;">'+pct+'% · Lancé le '+new Date(S.cb.startTime).toLocaleString('fr-FR',{weekday:'short',hour:'2-digit',minute:'2-digit'})+'</div></div><div class="cb-alarm-box"><div class="cb-alarm-title">⏰ Heure de fin estimée</div><div class="cb-alarm-time">'+endStr+'</div><div class="cb-alarm-hint">Configure une alarme à cette heure dans ton horloge iPhone !</div></div><div class="cb-info-grid"><div class="cb-info-box"><div class="cb-info-val">'+S.cb.water+'</div><div class="cb-info-unit">ml d\'eau</div></div><div class="cb-info-box"><div class="cb-info-val">'+getCBCoffee()+'</div><div class="cb-info-unit">g de café</div></div><div class="cb-info-box"><div class="cb-info-val">'+S.cb.hours+'h</div><div class="cb-info-unit">durée</div></div></div><button id="btn-cb-reset" style="width:100%;background:#2a1010;border:1px solid #5c2020;color:#f87171;border-radius:14px;padding:14px;font-size:15px;font-weight:600;font-family:inherit;">Annuler l\'infusion</button>';
+    el.innerHTML='<div style="background:#0d1f2d;border:1px solid #1e3a4a;border-radius:20px;padding:24px;margin-bottom:16px;text-align:center;"><div style="font-size:13px;color:#60c8f5;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Temps restant</div><div class="cb-time-display">'+fmtHMS(remaining)+'</div><div class="cb-progress-bar"><div class="cb-progress-fill" style="width:'+pct+'%;"></div></div><div style="font-size:13px;color:#555;">'+pct+'% · '+cbr.label+' · 1:'+cbr.ratio+'</div></div><div class="cb-alarm-box"><div class="cb-alarm-title">⏰ Heure de fin estimée</div><div class="cb-alarm-time">'+endStr+'</div><div class="cb-alarm-hint">Configure une alarme à cette heure dans ton horloge iPhone !</div></div><div class="cb-info-grid"><div class="cb-info-box"><div class="cb-info-val">'+S.cb.water+'</div><div class="cb-info-unit">ml d\'eau</div></div><div class="cb-info-box"><div class="cb-info-val">'+getCBCoffee()+'</div><div class="cb-info-unit">g de café</div></div><div class="cb-info-box"><div class="cb-info-val">'+S.cb.hours+'h</div><div class="cb-info-unit">durée</div></div></div><button id="btn-cb-reset" style="width:100%;background:#2a1010;border:1px solid #5c2020;color:#f87171;border-radius:14px;padding:14px;font-size:15px;font-weight:600;font-family:inherit;">Annuler l\'infusion</button>';
     document.getElementById('btn-cb-reset').onclick=resetCB;
     clearInterval(cbInterval);
     cbInterval=setInterval(function(){ renderCBScreen(); },1000);
@@ -372,22 +403,21 @@ function renderCBScreen(){
 
 function startCB(){
   S.cb.startTime=Date.now(); S.cb.duration=S.cb.hours*3600; S.cb.active=true;
-  try{ localStorage.setItem("v60cb",JSON.stringify({startTime:S.cb.startTime,duration:S.cb.duration,water:S.cb.water,hours:S.cb.hours,active:true})); }catch(e){}
+  try{ localStorage.setItem("v60cb",JSON.stringify({startTime:S.cb.startTime,duration:S.cb.duration,water:S.cb.water,hours:S.cb.hours,ratioKey:S.cb.ratioKey,active:true})); }catch(e){}
   showScreen('coldbrew'); renderCBScreen();
 }
-
 function resetCB(){
   clearInterval(cbInterval); S.cb.startTime=null; S.cb.active=false;
   try{ localStorage.removeItem("v60cb"); }catch(e){}
-  renderCBHome(); showScreen('home'); switchMethod('coldbrew');
+  showScreen('home'); switchMethod('coldbrew');
 }
 
 function renderBrew(){
-  var steps=getStepsNow(), cur=steps[S.step], acc=getAccent(), el=document.getElementById('brew-content');
+  var steps=getStepsNow(),cur=steps[S.step],acc=getV60Accent(),el=document.getElementById('brew-content');
   document.getElementById('step-counter').textContent='Étape '+(S.done?steps.length:S.step+1)+' / '+steps.length;
   document.getElementById('mode-badge').textContent=S.autoMode?'⚡ Auto':'👆 Manuel';
   if(S.done){
-    el.innerHTML='<div class="done-wrap"><div style="font-size:80px;margin-bottom:16px;">☕</div><h2 style="font-size:28px;margin-bottom:8px;font-weight:700;">Bon café !</h2><p style="color:#888;margin-bottom:32px;">'+S.water+'ml · '+getCoffee()+'g · '+getStrength(S.strengthKey).label+'</p><button id="btn-new" style="background:'+acc+';border:none;color:#fff;border-radius:14px;padding:16px;font-size:16px;font-weight:600;width:100%;font-family:inherit;">Nouveau café</button></div>';
+    el.innerHTML='<div class="done-wrap"><div style="font-size:80px;margin-bottom:16px;">☕</div><h2 style="font-size:28px;margin-bottom:8px;font-weight:700;">Bon café !</h2><p style="color:#888;margin-bottom:32px;">'+S.water+'ml · '+getCoffee()+'g · '+getV60Strength(S.v60Key).label+'</p><button id="btn-new" style="background:'+acc+';border:none;color:#fff;border-radius:14px;padding:16px;font-size:16px;font-weight:600;width:100%;font-family:inherit;">Nouveau café</button></div>';
     document.getElementById('btn-new').onclick=function(){ showScreen('home'); renderHome(); };
     return;
   }
@@ -397,14 +427,14 @@ function renderBrew(){
   var typeBadge='';
   if(cur.type==='versement') typeBadge='<div class="badge-v">🌊 Temps de versement</div>';
   else if(cur.type==='repos') typeBadge='<div class="badge-r">⏸ Temps de repos</div>';
-  var targetHtml=cur.target?'<div class="target-box"><span class="target-val">'+cur.target+' ml</span><span class="target-unit"> objectif</span></div>':'';
+  var targetHtml=cur.target?'<div class="target-box"><span class="target-val" style="color:'+acc+';">'+cur.target+' ml</span><span class="target-unit"> objectif</span></div>':'';
   var timerHtml='';
   if(cur.duration>0){
     var r=54,circ=2*Math.PI*r,dash=circ*(S.timeLeft/cur.duration);
     var btnLabel=S.running?'Pause ⏸':(S.timeLeft===cur.duration?'Lancer ▶':'Reprendre ▶');
     timerHtml='<div class="timer-wrap"><svg width="140" height="140" viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><circle cx="65" cy="65" r="'+r+'" fill="none" stroke="#2a2a2a" stroke-width="8"/><circle cx="65" cy="65" r="'+r+'" fill="none" stroke="'+acc+'" stroke-width="8" stroke-dasharray="'+dash+' '+circ+'" stroke-linecap="round" transform="rotate(-90 65 65)"/><text x="65" y="62" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="bold" font-family="monospace">'+fmt(S.timeLeft)+'</text><text x="65" y="82" text-anchor="middle" fill="#888888" font-size="11" font-family="sans-serif">restant</text></svg><div class="timer-btns"><button class="timer-btn" id="btn-timer" style="background:'+(S.running?'#2a2a2a':acc)+';">'+btnLabel+'</button></div></div>';
   }
-  var canNext=cur.duration===0||S.timeLeft===0, showNext=!S.autoMode||canNext;
+  var canNext=cur.duration===0||S.timeLeft===0,showNext=!S.autoMode||canNext;
   el.innerHTML='<div class="card"><div class="card-icon">'+cur.icon+'</div><h2 class="card-title">'+cur.title+'</h2>'+typeBadge+'<p class="card-desc">'+cur.desc+'</p>'+targetHtml+'</div>'+timerHtml+dots+'<button id="btn-next" class="next-btn" style="background:'+(showNext?acc:'#2a2a2a')+';color:'+(showNext?'#fff':'#555')+';">'+(S.step+1>=steps.length?'Terminer ☕':'Étape suivante →')+'</button>';
   var tb=document.getElementById('btn-timer');
   if(tb) tb.onclick=function(){ if(S.running) stopTimer(); else startTimer(); };
@@ -412,13 +442,8 @@ function renderBrew(){
 }
 
 function startTimer(){
-  if(S.running) return;
-  S.running=true;
-  S.interval=setInterval(function(){
-    S.timeLeft--;
-    if(S.timeLeft<=0){ S.timeLeft=0; clearInterval(S.interval); S.interval=null; S.running=false; renderBrew(); if(S.autoMode) setTimeout(autoNext,800); }
-    else { renderBrew(); }
-  },1000);
+  if(S.running) return; S.running=true;
+  S.interval=setInterval(function(){ S.timeLeft--; if(S.timeLeft<=0){ S.timeLeft=0; clearInterval(S.interval); S.interval=null; S.running=false; renderBrew(); if(S.autoMode) setTimeout(autoNext,800); } else { renderBrew(); } },1000);
   renderBrew();
 }
 function stopTimer(){ clearInterval(S.interval); S.interval=null; S.running=false; renderBrew(); }
@@ -431,25 +456,23 @@ function autoNext(){
 function nextStep(){
   clearInterval(S.interval); S.running=false;
   var steps=getStepsNow();
-  if(S.step+1>=steps.length){ S.done=true; saveHistory(); }
-  else { S.step++; S.timeLeft=steps[S.step].duration; }
+  if(S.step+1>=steps.length){ S.done=true; saveHistory(); } else { S.step++; S.timeLeft=steps[S.step].duration; }
   renderBrew();
 }
 function saveHistory(){
-  var str=getStrength(S.strengthKey);
+  var str=getV60Strength(S.v60Key);
   var entry={date:new Date().toLocaleString("fr-FR"),water:S.water,coffee:getCoffee(),strength:str.label,mode:S.autoMode?'Auto':'Manuel',type:'V60',id:Date.now()};
   S.history.unshift(entry); if(S.history.length>20) S.history.pop();
   try{ localStorage.setItem("v60h",JSON.stringify(S.history)); }catch(e){}
 }
-
 function renderHistory(){
   var el=document.getElementById('hist-content');
   if(S.history.length===0){ el.innerHTML='<div class="empty"><div style="font-size:56px;">☕</div><p style="margin-top:12px;">Aucun café préparé</p></div>'; return; }
   var html='<div class="hist-list">';
   for(var i=0;i<S.history.length;i++){
-    var h=S.history[i], col='#a0673a';
+    var h=S.history[i],col='#a0673a';
     if(h.type==='Cold Brew'){ col='#60c8f5'; }
-    else { for(var j=0;j<STRENGTHS.length;j++){ if(STRENGTHS[j].label===h.strength){ col=STRENGTHS[j].color; break; } } }
+    else { for(var j=0;j<V60_STRENGTHS.length;j++){ if(V60_STRENGTHS[j].label===h.strength){ col=V60_STRENGTHS[j].color; break; } } }
     html+='<div class="hist-item" style="border-left:3px solid '+col+';"><div class="hist-top"><span class="hist-name">'+(h.type||'V60')+' · '+(h.strength||'')+'</span><span class="hist-date">'+h.date+'</span></div><div class="hist-info">'+h.water+'ml · '+h.coffee+'g'+(h.mode?' · '+h.mode:'')+'</div></div>';
   }
   html+='</div><button id="btn-clear" style="background:#2a1010;border:1px solid #5c2020;color:#f87171;border-radius:10px;padding:10px;width:100%;margin-top:12px;font-family:inherit;font-size:14px;">Effacer l\'historique</button>';
@@ -459,7 +482,7 @@ function renderHistory(){
 
 document.getElementById('water-slider').addEventListener('input',function(e){ S.water=Number(e.target.value); renderHome(); });
 document.getElementById('cb-water-slider').addEventListener('input',function(e){ S.cb.water=Number(e.target.value); renderCBHome(); });
-document.getElementById('auto-toggle').addEventListener('change',function(e){ S.autoMode=e.target.checked; renderHome(); });
+document.getElementById('auto-toggle').addEventListener('change',function(e){ S.autoMode=e.target.checked; document.getElementById('toggle-slider').style.background=S.autoMode?getV60Accent():'#2a2a2a'; renderHome(); });
 document.getElementById('btn-start').onclick=function(){ S.step=0; S.done=false; S.running=false; clearInterval(S.interval); S.interval=null; S.timeLeft=getStepsNow()[0].duration; showScreen('brew'); renderBrew(); };
 document.getElementById('btn-cb-start').onclick=function(){ if(S.cb.active&&S.cb.startTime){ showScreen('coldbrew'); renderCBScreen(); } else { startCB(); } };
 document.getElementById('btn-brew-back').onclick=function(){ clearInterval(S.interval); S.running=false; showScreen('home'); renderHome(); };
@@ -467,10 +490,7 @@ document.getElementById('btn-cb-back').onclick=function(){ clearInterval(cbInter
 document.getElementById('btn-history').onclick=function(){ showScreen('history'); renderHistory(); };
 document.getElementById('btn-hist-back').onclick=function(){ showScreen('home'); renderHome(); };
 
-window.onload=function(){
-  renderHome();
-  if(S.cb.active&&S.cb.startTime){ var elapsed=Math.floor((Date.now()-S.cb.startTime)/1000); if(elapsed<S.cb.duration){ document.getElementById('tab-coldbrew').innerHTML='🧊 Cold Brew <span style="background:#1e6091;color:#fff;border-radius:6px;padding:1px 6px;font-size:10px;margin-left:4px;">⏱</span>'; } }
-};
+window.onload=function(){ renderHome(); };
 </script>
 </body>
 </html>
